@@ -44,6 +44,28 @@
   }
   .font-mono{ font-family:'JetBrains Mono', monospace; letter-spacing:0; }
 
+  /* Editorial soft de-emphasis — uniform opacity + lighter weight, fully legible */
+  .fade-soft{
+    opacity: 0.55;
+    font-weight: 400;
+  }
+
+  /* Typewriter container — preserve line breaks, reserve final-state height
+     via invisible placeholder so the visible text stays anchored to the top */
+  #s1-b h2{
+    white-space: pre-line;
+    position: relative;
+  }
+  #s1-b h2 .tw-placeholder{
+    visibility: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+  /* Typewriter overlay — text-align:left so chars don't re-center as line grows */
+  #s1-b h2 .tw-overlay{
+    text-align: left;
+  }
+
   /* Page surface — paper + grain */
   .surface{ display:none; }
   .grain{ display:none; }
@@ -252,85 +274,6 @@
   }
   .mini-chart .val{ font-family:'JetBrains Mono',monospace; font-size:10px; color:#3a3a3a; min-width:36px; text-align:right; }
 
-  /* Floating fragments (chaos slide) */
-  .frag{
-    position:absolute;
-    background:#fff;
-    border:1px solid var(--line-soft);
-    box-shadow:0 24px 40px -28px rgba(31,29,26,.18), 0 6px 14px -10px rgba(31,29,26,.10);
-    padding:10px 12px;
-    font-size:11px; color:var(--ink-soft);
-    border-radius:3px;
-    transform-origin:center;
-  }
-  .frag .ftitle{ font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:6px; }
-  .frag .grid-mini{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:2px;
-  }
-  .frag .grid-mini i{
-    height:6px; background:var(--line-soft); border-radius:1px;
-  }
-  .frag .grid-mini i.dark{ background:#bcb6a6; }
-
-  .drift-1{ animation:drift1 11s ease-in-out infinite; }
-  .drift-2{ animation:drift2 13s ease-in-out infinite; }
-  .drift-3{ animation:drift3 9.5s ease-in-out infinite; }
-  .drift-4{ animation:drift4 14s ease-in-out infinite; }
-  @keyframes drift1{ 0%,100%{ transform:translate(0,0) rotate(-3deg);} 50%{ transform:translate(10px,-6px) rotate(-2deg);} }
-  @keyframes drift2{ 0%,100%{ transform:translate(0,0) rotate(2deg);} 50%{ transform:translate(-8px,8px) rotate(3deg);} }
-  @keyframes drift3{ 0%,100%{ transform:translate(0,0) rotate(-1deg);} 50%{ transform:translate(6px,4px) rotate(0deg);} }
-  @keyframes drift4{ 0%,100%{ transform:translate(0,0) rotate(4deg);} 50%{ transform:translate(-6px,-8px) rotate(2deg);} }
-
-  .glitch-kpi{
-    font-family:'JetBrains Mono',monospace; font-weight:500;
-    font-variant-numeric:tabular-nums;
-  }
-
-  /* Connections (transformation slide) */
-  .connect-line{
-    stroke:var(--ink-soft); stroke-width:.8; fill:none;
-    stroke-dasharray:1200; stroke-dashoffset:1200;
-  }
-  .node{
-    position:absolute; padding:8px 14px; border-radius:9999px;
-    background:#fff; border:1px solid var(--line);
-    font-size:11px; color:var(--ink-soft);
-    font-family:'JetBrains Mono',monospace; letter-spacing:.04em;
-    box-shadow:0 8px 24px -16px rgba(31,29,26,.15);
-    opacity:0; transform:translateY(6px);
-  }
-  .node .dot{
-    display:inline-block; width:5px; height:5px; border-radius:9999px;
-    background:var(--accent); margin-right:8px; vertical-align:1px;
-  }
-
-  /* Score ring */
-  .score-ring circle{ fill:none; }
-  .score-ring .track{ stroke:var(--line); stroke-width:6; }
-  .score-ring .progress{
-    stroke:var(--accent-deep); stroke-width:6;
-    stroke-linecap:round; transform:rotate(-90deg); transform-origin:center;
-    stroke-dasharray:0 1000;
-    transition:stroke-dasharray 2.2s cubic-bezier(.16,1,.3,1);
-  }
-
-  /* Germany map */
-  .map-path{
-    fill:none; stroke:var(--ink-soft); stroke-width:1; opacity:.55;
-    stroke-dasharray:1; stroke-dashoffset:1;
-  }
-  .map-pin{
-    fill:var(--accent-deep); opacity:0; transform-origin:center;
-  }
-  .map-pin-halo{
-    fill:none; stroke:var(--accent); stroke-width:.6; opacity:0;
-  }
-  .map-node-label{
-    font-family:'JetBrains Mono',monospace; font-size:8px;
-    fill:var(--ink-muted); letter-spacing:.08em;
-    opacity:0;
-  }
-
   /* Hairlines */
   .hairline{ height:1px; background:var(--line); width:100%; }
   .hairline-soft{ height:1px; background:var(--line-soft); width:100%; }
@@ -385,21 +328,6 @@
   .answer-row .v{ font-family:'JetBrains Mono',monospace; color:var(--ink); font-weight:500; }
   .answer-row .v.up{ color:var(--ink); font-weight:600; }
   .answer-row .v.dn{ color:var(--ink); font-weight:600; }
-
-  /* Slide 6 blur->focus */
-  .blur-cell{
-    background:#fff; border:1px solid var(--line-soft);
-    border-radius:6px; padding:14px 16px;
-    transition:filter 1.4s cubic-bezier(.16,1,.3,1), opacity 1.4s ease;
-    filter:blur(8px); opacity:.65;
-  }
-  .blur-cell.sharp{ filter:blur(0); opacity:1; }
-  .blur-cell .lbl{
-    font-family:'JetBrains Mono',monospace; font-size:9px;
-    letter-spacing:.24em; text-transform:uppercase; color:var(--ink-faint);
-    margin-bottom:6px;
-  }
-  .blur-cell .val{ font-family:'Fraunces',serif; font-weight:300; font-size:22px; color:var(--ink); }
 
   /* Calendar months ribbon */
   .month-tile{
@@ -475,146 +403,6 @@
   .lc-pill.ghost{ background:transparent; border-color:var(--line); color:var(--ink-muted); }
   .lc-pill.ghost .pdot{ background:var(--ink-muted); }
 
-  /* Acquisition cards */
-  .acq-card{
-    background:#fff; border:1px solid var(--line);
-    border-radius:20px; padding:22px 24px;
-    transition:all .6s cubic-bezier(.16,1,.3,1);
-    opacity:0; transform:translateY(14px);
-  }
-  .acq-card.show{ opacity:1; transform:translateY(0); }
-  .acq-card .acq-head{
-    display:flex; justify-content:space-between; align-items:baseline;
-    margin-bottom:14px;
-  }
-  .acq-card .acq-num{
-    font-family:'JetBrains Mono',monospace; font-size:11px;
-    letter-spacing:.18em; color:var(--ink-muted);
-  }
-  .acq-card .acq-year{
-    font-family:'JetBrains Mono',monospace; font-size:11px;
-    color:var(--ink);
-  }
-  .acq-card .acq-name{
-    font-family:'Inter',sans-serif; font-weight:600; font-size:18px;
-    color:var(--ink); letter-spacing:-0.02em; line-height:1.25;
-  }
-  .acq-card .acq-meta{
-    font-size:12.5px; color:var(--ink-muted);
-    margin-top:4px;
-  }
-  .acq-card .acq-divider{
-    height:1px; background:var(--line-soft);
-    margin:16px 0 14px;
-  }
-  .acq-card .acq-row{
-    display:flex; justify-content:space-between; gap:10px;
-    font-size:12.5px; line-height:1.5;
-    padding:3px 0;
-  }
-  .acq-card .acq-row .k{ color:var(--ink-muted); flex-shrink:0; }
-  .acq-card .acq-row .v{
-    color:var(--ink); font-weight:500;
-    font-family:'JetBrains Mono',monospace; font-size:11px;
-    text-align:right; line-height:1.45;
-  }
-
-  /* Stat band */
-  .stat-band{
-    display:flex; gap:0; background:var(--bg-deep);
-    border-radius:24px; overflow:hidden;
-  }
-  .stat-band > div{
-    flex:1; padding:24px 28px;
-    border-right:1px solid rgba(0,0,0,0.06);
-  }
-  .stat-band > div:last-child{ border-right:0; }
-  .stat-band .sb-num{
-    font-family:'Inter',sans-serif; font-weight:600;
-    font-size:36px; color:var(--ink); letter-spacing:-0.035em;
-    line-height:1;
-  }
-  .stat-band .sb-lbl{
-    font-size:12px; color:var(--ink-muted); margin-top:8px;
-    line-height:1.4;
-  }
-
-  /* Vision pillars (slide 7) */
-  .vision-grid{
-    display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;
-    width:100%; max-width:980px;
-  }
-  .vision-card{
-    background:var(--bg-deep); border-radius:22px;
-    padding:24px 26px; position:relative;
-    opacity:0; transform:translateY(12px);
-  }
-  .vision-card.show{ opacity:1; transform:translateY(0); transition: all .9s cubic-bezier(.16,1,.3,1); }
-  .vision-card .vc-num{
-    font-family:'JetBrains Mono',monospace; font-size:10px;
-    color:var(--ink-muted); letter-spacing:.2em;
-  }
-  .vision-card .vc-title{
-    font-family:'Inter',sans-serif; font-weight:600;
-    font-size:18px; color:var(--ink); letter-spacing:-0.02em;
-    margin-top:18px; line-height:1.25;
-  }
-  .vision-card .vc-body{
-    color:var(--ink-muted); font-size:13px; line-height:1.55;
-    margin-top:8px;
-  }
-
-  /* Abstract network grid (slide 7 replacement for map) */
-  .net-grid{
-    position:absolute; inset:0;
-    display:grid;
-    grid-template-columns:repeat(14, 1fr);
-    grid-template-rows:repeat(8, 1fr);
-    gap:18px;
-    padding:8% 10%;
-    pointer-events:none;
-  }
-  .net-grid .nn{
-    width:5px; height:5px; border-radius:9999px;
-    background:var(--ink-faint);
-    opacity:0; transform:scale(0);
-    justify-self:center; align-self:center;
-    position:relative;
-  }
-  .net-grid .nn.on{ opacity:.45; transform:scale(1); transition:all 1.2s cubic-bezier(.16,1,.3,1); }
-  .net-grid .nn.hot{ opacity:.95; background:var(--ink); transform:scale(1.6); }
-  .net-grid .nn.hot::after{
-    content:''; position:absolute;
-    width:24px; height:24px; border-radius:9999px;
-    background:rgba(10,10,10,0.08);
-    margin-left:-9.5px; margin-top:-9.5px;
-    animation:halo 2.4s ease-out infinite;
-  }
-  @keyframes halo{
-    0%{ transform:scale(.4); opacity:.6; }
-    100%{ transform:scale(2.4); opacity:0; }
-  }
-
-  /* Benefit pills row */
-  .ben-row{
-    display:flex; gap:10px; flex-wrap:wrap; justify-content:center;
-  }
-  .ben-card{
-    background:#fff; border:1px solid var(--line);
-    border-radius:18px; padding:16px 22px;
-    display:flex; align-items:center; gap:12px;
-    opacity:0; transform:translateY(8px);
-  }
-  .ben-card.show{ opacity:1; transform:translateY(0); transition:all .8s cubic-bezier(.16,1,.3,1); }
-  .ben-card .bc-num{
-    font-family:'JetBrains Mono',monospace; font-size:11px;
-    color:var(--ink-muted);
-  }
-  .ben-card .bc-lbl{
-    font-family:'Inter',sans-serif; font-weight:600;
-    font-size:14px; color:var(--ink); letter-spacing:-0.01em;
-  }
-
   /* Connector chips below hero subtitle */
   .hero-chips{
     display:flex; gap:8px; margin-top:24px; flex-wrap:wrap;
@@ -627,56 +415,599 @@
   }
   .src-card.show{ opacity:1; transform:translateY(0); }
 
-  /* ===== Dark sections / closing ===== */
-  .dark-closing{
-    background:#0E0E10;
-    color:#fff;
-    border-radius:24px;
-    padding:32px 48px;
-    text-align:center;
-    max-width:560px;
-    width:auto;
-    box-shadow:0 30px 60px -30px rgba(10,10,16,.25), 0 12px 28px -20px rgba(10,10,16,.15);
+  /* Slide 4 — Feature cards + iPhone demo */
+  .feat-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:18px 20px;
+    position:relative;
+    opacity:0; transform:translateY(10px);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
   }
-  .hairline-dark{
-    height:1px; background:rgba(255,255,255,.10);
-    width:60%; margin:0 auto;
+  .feat-card.show{ opacity:1; transform:translateY(0); }
+  .feat-main{ background:var(--bg-deep); }
+  .feat-main::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.07) 1px, transparent 1px);
+    background-size:14px 14px;
+    border-radius:inherit;
+    opacity:.5;
+    pointer-events:none;
+  }
+  .feat-card > *{ position:relative; z-index:1; }
+  .feat-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:8px;
+  }
+  .feat-title{
+    font-family:'Inter',sans-serif;
+    font-weight:600; font-size:15px;
+    letter-spacing:-0.02em;
+    line-height:1.25;
+    color:var(--ink);
+  }
+  .feat-body{
+    color:var(--ink-muted);
+    font-size:12.5px; line-height:1.5;
+    margin-top:5px;
+  }
+  .feat-pills{
+    display:flex; flex-wrap:wrap; gap:5px;
+    margin-top:12px;
+  }
+  .feat-pills span{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:9999px;
+    padding:4px 10px;
+    font-size:10.5px;
+    color:var(--ink);
+    font-family:'JetBrains Mono',monospace;
   }
 
-  /* Full dark slide treatment (S4) */
-  .slide.dark{ background:#0E0E10; color:#fff; }
-  .slide.dark .chrome-label{ color:rgba(255,255,255,.45); }
-  .slide.dark .connect-line{ stroke:rgba(255,255,255,.22); }
-  .slide.dark .node{
-    background:rgba(255,255,255,.04);
+  /* iPhone cage — scaled down but reserves correct layout */
+  .s4-phone-cage{
+    width:calc(300px * 0.78);
+    height:calc(620px * 0.78);
+    position:relative;
+    display:inline-block;
+  }
+  .s4-phone-cage > .iphone{
+    transform-origin:top left;
+    transform:scale(0.78);
+  }
+  @media (max-height:820px){
+    .s4-phone-cage{
+      width:calc(300px * 0.68);
+      height:calc(620px * 0.68);
+    }
+    .s4-phone-cage > .iphone{ transform:scale(0.68); }
+  }
+
+  /* Benefits inline */
+  .ben-inline{
+    font-size:13px; color:var(--ink); letter-spacing:-0.005em;
+  }
+  .ben-inline strong{ font-weight:600; }
+  .ben-dot{ color:var(--ink-faint); font-size:13px; }
+
+  /* Slide 4 responsive */
+  @media (max-width:900px){
+    #s4-main{ grid-template-columns:1fr; }
+    .s4-phone-cage{ display:block; margin:0 auto; }
+  }
+
+  /* Slide 5 — Two-column merged demo (Chat + Report) */
+  .demo-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:32px;
+    align-items:start;
+  }
+  .demo-col{
+    display:flex; flex-direction:column;
+    opacity:0; transform:translateY(12px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .demo-col.show{ opacity:1; transform:translateY(0); }
+  .demo-head{ margin-bottom:6px; }
+  .demo-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--ink-muted);
+  }
+  .demo-title{
+    font-family:'Inter',sans-serif;
+    font-weight:600; font-size:clamp(1.2rem,1.9vw,1.55rem);
+    letter-spacing:-0.025em;
+    line-height:1.2;
+    margin-top:6px;
+    color:var(--ink);
+  }
+  .demo-body{
+    color:var(--ink-muted);
+    font-size:13px; line-height:1.55;
+    margin-top:6px;
+    max-width:44ch;
+  }
+  /* Trim the iframe height for the merged demo */
+  #s5-iframe{ height:380px; }
+
+  @media (max-width:960px){
+    .demo-grid{ grid-template-columns:1fr; gap:24px; }
+  }
+
+  /* Slide 8 — CTA (Pilot + Berater-Hook) */
+  .cta-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .cta-col{
+    border-radius:22px;
+    padding:30px 32px;
+    position:relative;
+    opacity:0; transform:translateY(12px);
+    transition:opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1);
+    display:flex; flex-direction:column;
+  }
+  .cta-col.show{ opacity:1; transform:translateY(0); }
+  .cta-light{
+    background:#fff;
+    border:1px solid var(--line);
+  }
+  .cta-dark{
+    background:#0E0E10;
+    color:#fff;
+    box-shadow:0 30px 60px -28px rgba(10,10,16,.28);
+  }
+  .cta-eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:14px;
+  }
+  .cta-title{
+    font-family:'Inter',sans-serif;
+    font-weight:600; font-size:clamp(1.25rem,2vw,1.7rem);
+    letter-spacing:-0.025em;
+    line-height:1.18;
+    color:var(--ink);
+  }
+  .cta-list{
+    display:flex; flex-direction:column; gap:14px;
+    margin-top:18px;
+  }
+  .cta-row{
+    display:flex; gap:14px; align-items:flex-start;
+    font-size:13.5px; line-height:1.5;
+    color:var(--ink-muted);
+  }
+  .cta-row strong{ color:var(--ink); font-weight:600; }
+  .cta-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.18em;
+    color:var(--ink-faint); padding-top:3px;
+    flex-shrink:0; min-width:22px;
+  }
+  .cta-pills{
+    display:flex; flex-direction:column; gap:8px;
+    margin-top:18px;
+  }
+  .cta-pill{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:10px 14px;
+    background:rgba(255,255,255,.05);
     border:1px solid rgba(255,255,255,.12);
-    color:rgba(255,255,255,.92);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border-radius:9999px;
+    font-size:13px;
+    color:#fff;
+    font-weight:500;
+    letter-spacing:-0.005em;
+    width:fit-content;
   }
-  .slide.dark .node .dot{ background:#fff; }
-  .slide.dark .label-eyebrow{ color:rgba(255,255,255,.5); }
-  .slide.dark .iphone{
-    box-shadow:
-      0 60px 120px -30px rgba(0,0,0,.6),
-      0 0 80px rgba(255,255,255,.06),
-      0 0 0 1.5px rgba(255,255,255,.06),
-      inset 0 0 0 1.5px rgba(255,255,255,.06);
+  .cta-pill-dot{
+    width:6px; height:6px; border-radius:9999px;
+    background:#E47B65;
   }
 
-  /* Score panel — dark contained card on slide 6 */
-  .score-dark{
-    background:#0E0E10;
-    border-radius:28px;
-    padding:40px 36px;
+  .cta-closing{
+    display:flex; flex-direction:row; justify-content:space-between; align-items:center;
+    gap:24px; flex-wrap:wrap;
+    padding:24px 32px;
+    border-radius:18px;
+    background:var(--bg-deep);
+    max-width:1080px;
+    margin:0 auto;
+    width:100%;
+  }
+  .cta-closing .quiet{ color:var(--ink-muted); }
+
+  @media (max-width:900px){
+    .cta-grid{ grid-template-columns:1fr; }
+    .cta-closing{ flex-direction:column; text-align:center; }
+  }
+
+  /* Slide 3 — Org chart (refined) */
+  .org-chart{
+    display:flex; flex-direction:column;
+    align-items:center;
+    position:relative;
+    width:100%;
+  }
+  .org-parent{
+    background:#0A0A0A;
     color:#fff;
+    border-radius:16px;
+    padding:14px 22px 14px 14px;
+    display:flex; align-items:center; gap:14px;
+    box-shadow:
+      0 28px 56px -28px rgba(10,10,16,.38),
+      0 6px 14px -6px rgba(10,10,16,.18),
+      inset 0 1px 0 rgba(255,255,255,.06);
+    opacity:0; transform:translateY(10px);
+    transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
     position:relative;
   }
-  .score-dark .score-ring .track{ stroke:rgba(255,255,255,.12); }
-  .score-dark .score-ring .progress{ stroke:#fff; }
-  .score-dark .label-eyebrow{ color:rgba(255,255,255,.5); }
-  .score-dark .quiet{ color:rgba(255,255,255,.55); }
-  .score-dark .ink-dot{ background:rgba(255,255,255,.5); }
+  .org-parent.show{ opacity:1; transform:translateY(0); }
+  .org-logo{
+    width:46px; height:46px;
+    background:#fff;
+    border-radius:11px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    padding:6px;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
+  }
+  .org-logo svg{
+    width:100%; height:100%; display:block;
+  }
+  .org-name{
+    font-family:'Inter',sans-serif;
+    font-weight:600; font-size:16px;
+    letter-spacing:-0.02em;
+    line-height:1.15;
+  }
+  .org-meta{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9.5px; letter-spacing:.18em;
+    color:rgba(255,255,255,.55);
+    margin-top:4px;
+    text-transform:uppercase;
+  }
+
+  /* Connections */
+  .org-trunk{
+    width:1.5px; height:32px;
+    background:var(--line);
+    transform-origin:top;
+    transform:scaleY(0);
+    transition: transform .7s cubic-bezier(.16,1,.3,1);
+    position:relative;
+  }
+  .org-trunk.show{ transform:scaleY(1); }
+  .org-trunk::before,
+  .org-trunk::after{
+    content:'';
+    position:absolute;
+    left:50%; transform:translateX(-50%);
+    width:6px; height:6px;
+    background:var(--ink);
+    border-radius:9999px;
+    opacity:0;
+    transition: opacity .4s cubic-bezier(.16,1,.3,1) .6s;
+  }
+  .org-trunk::before{ top:-3px; }
+  .org-trunk::after{ bottom:-3px; }
+  .org-trunk.show::before,
+  .org-trunk.show::after{ opacity:1; }
+
+  .org-bus{
+    width:84%; max-width:680px;
+    height:1.5px; background:var(--line);
+    transform-origin:center;
+    transform:scaleX(0);
+    transition: transform .8s cubic-bezier(.16,1,.3,1);
+  }
+  .org-bus.show{ transform:scaleX(1); }
+
+  .org-children{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:12px;
+    width:100%;
+    margin-top:0;
+    position:relative;
+  }
+  .org-child{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px 16px 18px;
+    position:relative;
+    opacity:0; transform:translateY(10px);
+    transition: opacity .7s cubic-bezier(.16,1,.3,1),
+                transform .35s cubic-bezier(.16,1,.3,1),
+                box-shadow .35s cubic-bezier(.16,1,.3,1),
+                border-color .35s cubic-bezier(.16,1,.3,1);
+    box-shadow: 0 1px 0 rgba(0,0,0,.02);
+  }
+  .org-child.show{ opacity:1; transform:translateY(0); }
+  .org-child:hover{
+    transform:translateY(-3px);
+    border-color:var(--ink-faint);
+    box-shadow: 0 16px 32px -16px rgba(0,0,0,.16), 0 4px 10px -3px rgba(0,0,0,.06);
+  }
+  .org-child::before{
+    content:'';
+    position:absolute;
+    top:-22px; left:50%;
+    width:1.5px; height:22px;
+    background:var(--line);
+    transform:translateX(-50%) scaleY(0);
+    transform-origin:top;
+    transition: transform .6s cubic-bezier(.16,1,.3,1);
+  }
+  .org-child.show::before{ transform:translateX(-50%) scaleY(1); }
+  .org-child::after{
+    content:'';
+    position:absolute;
+    top:-26px; left:50%;
+    transform:translateX(-50%) scale(0);
+    width:5px; height:5px; border-radius:9999px;
+    background:var(--ink);
+    transition: transform .35s cubic-bezier(.16,1,.3,1) .55s;
+  }
+  .org-child.show::after{ transform:translateX(-50%) scale(1); }
+  .org-child-head{
+    display:flex; justify-content:space-between; align-items:baseline;
+    margin-bottom:12px;
+  }
+  .org-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.18em;
+    color:var(--ink-muted); text-transform:uppercase;
+  }
+  .org-year{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; color:var(--ink);
+  }
+  .org-child-name{
+    font-family:'Inter',sans-serif;
+    font-weight:600; font-size:14.5px;
+    letter-spacing:-0.018em;
+    line-height:1.2; color:var(--ink);
+  }
+  .org-child-meta{
+    font-size:11.5px;
+    color:var(--ink-muted);
+    margin-top:10px;
+    line-height:1.45;
+    padding-top:10px;
+    border-top:1px solid var(--line-soft);
+  }
+
+  /* Slide 2 — Editorial split: dark statement (left, diagonal cut) + chaos (right) */
+  .s2-row{
+    position:absolute; inset:0;
+    display:flex; flex-direction:row;
+    background:var(--bg);
+  }
+  .s2-left{
+    flex:0 0 43%;
+    background:#0E0E10;
+    color:#fff;
+    padding:80px 60px 64px;
+    display:flex; flex-direction:column; justify-content:center;
+    position:relative;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 70px) 100%, 0 100%);
+  }
+  .s2-left .label-eyebrow{ color:rgba(255,255,255,.5); }
+  .s2-chaos{
+    flex:1;
+    position:relative;
+    overflow:hidden;
+    padding:48px 24px;
+  }
+
+  /* Floating chaos fragments — papers on a desk */
+  .chaos-frag{
+    position:absolute;
+    background:#fff;
+    border-radius:10px;
+    box-shadow:
+      0 14px 32px -16px rgba(0,0,0,.18),
+      0 4px 10px -4px rgba(0,0,0,.10);
+    opacity:0;
+    transform: translateY(24px) rotate(var(--rot,0deg));
+    transition: opacity 1.1s cubic-bezier(.16,1,.3,1), transform 1.1s cubic-bezier(.16,1,.3,1);
+    overflow:hidden;
+  }
+  .chaos-frag.in{
+    opacity:1;
+    transform: translateY(0) rotate(var(--rot,0deg));
+  }
+  .chaos-frag.float{
+    animation: paper-float var(--dur,8s) ease-in-out infinite var(--del,0s);
+  }
+  @keyframes paper-float{
+    0%, 100% { transform: translateY(0) rotate(var(--rot,0deg)); }
+    50%      { transform: translateY(-6px) rotate(calc(var(--rot,0deg) + 0.4deg)); }
+  }
+  .chaos-frag:hover{
+    z-index:5;
+    transform: translateY(-8px) rotate(var(--rot,0deg)) scale(1.02);
+    animation-play-state: paused;
+    box-shadow:
+      0 22px 44px -20px rgba(0,0,0,.22),
+      0 6px 14px -6px rgba(0,0,0,.12);
+    transition: transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s;
+  }
+  .chaos-frag .tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:8.5px; letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:8px;
+  }
+  .chaos-frag .meta-late{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; color:#B5432E;
+    margin-top:8px; letter-spacing:.04em;
+  }
+
+  /* Editorial stamp overlay */
+  .stamp{
+    position:absolute;
+    padding:3px 8px;
+    border:1.5px solid #B5432E;
+    color:#B5432E;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700; font-size:8px;
+    letter-spacing:.18em;
+    background:rgba(255,240,235,.55);
+    opacity:.92;
+    pointer-events:none;
+    border-radius:1px;
+  }
+
+  /* Excel snippet — green accent (Excel signature) */
+  .frag-excel{
+    padding:11px 13px; width:165px;
+    border-top:3px solid #217346;
+  }
+  .frag-excel .xgrid{
+    display:grid; grid-template-columns:repeat(4,1fr);
+    gap:1px; background:#e8e2d4;
+    margin-top:2px;
+  }
+  .frag-excel .xc{
+    background:#fff;
+    height:14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:8px;
+    color:#3a352c;
+    display:flex; align-items:center; justify-content:flex-end;
+    padding:0 4px;
+  }
+  .frag-excel .xc.h{ background:#f4f1ec; justify-content:center; color:#6e6655; }
+  .frag-excel .xc.err{ color:#B5432E; font-weight:600; }
+  .frag-excel .xc.dark{ background:#0A0A0A; color:#fff; }
+
+  /* DATEV export */
+  .frag-datev{
+    padding:12px 15px; width:215px;
+    border-left:3px solid #0A0A0A;
+  }
+  .frag-datev .dlist{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; line-height:1.7;
+    color:#3a352c;
+  }
+  .frag-datev .dlist strong{ color:#0A0A0A; font-weight:600; }
+
+  /* WhatsApp message */
+  .frag-wapp{
+    padding:11px 13px; width:215px;
+    background:#fff;
+  }
+  .frag-wapp .wsender{
+    font-family:'JetBrains Mono',monospace;
+    font-size:8.5px; letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--ink-muted);
+    margin-bottom:6px;
+  }
+  .frag-wapp .wbubble{
+    background:#DCFCC7;
+    padding:7px 10px;
+    border-radius:10px;
+    font-size:11px; line-height:1.4;
+    color:#1a1a1a;
+  }
+
+  /* Sticky note */
+  .frag-sticky{
+    background:#FFEF9C;
+    padding:14px 16px 13px; width:130px;
+    border-radius:3px;
+    box-shadow:
+      3px 8px 16px -4px rgba(0,0,0,.18),
+      0 1px 2px rgba(0,0,0,.06);
+  }
+  .frag-sticky .stxt{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-size:21px; color:#3a352c;
+    line-height:1.05;
+  }
+  .frag-sticky .sline{
+    height:1px; background:rgba(0,0,0,.12);
+    margin:8px 0 6px;
+  }
+  .frag-sticky .stiny{
+    font-family:'JetBrains Mono',monospace;
+    font-size:9px; color:#7a6e3a;
+    letter-spacing:.03em;
+  }
+
+  /* PDF/BWA */
+  .frag-pdf{
+    padding:13px 14px; width:175px;
+    background:#f8f5ee;
+  }
+  .frag-pdf .pbars{
+    display:flex; flex-direction:column; gap:4px;
+    margin-top:6px;
+  }
+  .frag-pdf .pbar{
+    height:6px; background:#d8d2c5; border-radius:2px;
+  }
+  .frag-pdf .pbar:nth-child(2){ width:88%; }
+  .frag-pdf .pbar:nth-child(3){ width:72%; }
+  .frag-pdf .pbar:nth-child(4){ width:55%; background:#0A0A0A; }
+
+  /* Email — blue unread tab */
+  .frag-email{
+    padding:12px 14px 12px 18px; width:240px;
+    border-left:3px solid #4A89C0;
+    position:relative;
+  }
+  .frag-email .esubj{
+    font-family:'Inter',sans-serif; font-weight:600;
+    font-size:12px; color:#0A0A0A;
+    margin-bottom:4px;
+    letter-spacing:-0.01em;
+  }
+  .frag-email .ebody{
+    font-size:11px; line-height:1.45;
+    color:#6e6655; font-style:italic;
+  }
+
+  /* KPI conflict */
+  .frag-kpi{
+    padding:12px 16px; width:160px;
+  }
+  .frag-kpi .kvals{
+    position:relative; height:46px; margin-top:2px;
+  }
+  .frag-kpi .kval{
+    position:absolute;
+    font-family:'JetBrains Mono',monospace;
+    font-weight:500;
+  }
+  .frag-kpi .k1{ top:0; left:0; font-size:12px; color:rgba(0,0,0,.25); }
+  .frag-kpi .k2{ top:14px; left:18px; font-size:20px; color:#B5432E; font-weight:600; letter-spacing:-0.02em; }
+  .frag-kpi .k3{ top:32px; left:38px; font-size:12px; color:rgba(0,0,0,.25); }
+
+  @media (max-width:900px){
+    .s2-row{ flex-direction:column; }
+    .s2-left{ flex:0 0 auto; padding:48px 32px 24px; }
+    .s2-chaos{ min-height:60vh; }
+  }
 
   /* WhatsApp input bar (bottom of iPhone) */
   .wa-input{
@@ -731,16 +1062,64 @@
       inset 0 0 0 1.5px rgba(255,255,255,.06);
   }
 
+  /* Report document frame (browser-window style) */
+  .report-frame{
+    border-radius:14px;
+    overflow:hidden;
+    background:#fff;
+    box-shadow:
+      0 50px 100px -40px rgba(31,29,26,.22),
+      0 20px 40px -28px rgba(31,29,26,.12),
+      0 0 0 1px var(--line-soft);
+    transform: perspective(1400px) rotateY(-2deg);
+    transform-origin: center left;
+  }
+  .report-frame-bar{
+    display:flex; align-items:center; gap:12px;
+    padding:9px 14px;
+    background:#f4f1ec;
+    border-bottom:1px solid rgba(0,0,0,.06);
+  }
+  .rf-dots{ display:flex; gap:6px; }
+  .rf-dots span{
+    width:10px; height:10px; border-radius:9999px;
+    background:#d8d0bc;
+  }
+  .rf-title{
+    flex:1; text-align:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; color:#7a7363; letter-spacing:0.02em;
+  }
+  .rf-open{
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink); font-weight:500;
+    text-decoration:none;
+    padding:5px 11px;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:6px;
+    transition:all .35s cubic-bezier(.16,1,.3,1);
+  }
+  .rf-open:hover{ background:#0A0A0A; color:#fff; border-color:#0A0A0A; }
+  .report-iframe{
+    width:100%; height:460px;
+    border:0; display:block;
+    background:#f1e7d0;
+  }
+  .report-frame-fade{
+    position:absolute; left:0; right:0; bottom:0;
+    height:80px;
+    background:linear-gradient(180deg, rgba(241,231,208,0) 0%, rgba(241,231,208,.92) 100%);
+    pointer-events:none;
+  }
+
   /* utility */
   .max-content{ max-width:1280px; margin-left:auto; margin-right:auto; }
 
   @media (max-width: 900px){
     .iphone{ transform:scale(.86); }
     .chrome{ top:20px; left:20px; right:20px; }
-    .vision-grid{ grid-template-columns:1fr; }
-    .stat-band{ flex-direction:column; }
-    .stat-band > div{ border-right:0; border-bottom:1px solid rgba(0,0,0,0.06); }
-    .stat-band > div:last-child{ border-bottom:0; }
   }
 </style>
 </head>
@@ -756,8 +1135,6 @@
   <span class="nav-dot" data-go="2"></span>
   <span class="nav-dot" data-go="3"></span>
   <span class="nav-dot" data-go="4"></span>
-  <span class="nav-dot" data-go="5"></span>
-  <span class="nav-dot" data-go="6"></span>
 </nav>
 
 <main class="deck" id="deck">
@@ -768,7 +1145,7 @@
 <section class="slide" id="s1" data-idx="0">
   <div class="chrome">
     <span class="chrome-label">001 &nbsp;—&nbsp; Eine Idee</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
+    <span class="chrome-mark">Julie<span class="fade-soft">.ai</span></span>
   </div>
 
   <!-- Stage -->
@@ -786,9 +1163,14 @@
     <!-- Phase B — typewriter question -->
     <div id="s1-b" class="absolute inset-0 flex items-center justify-center px-10 opacity-0">
       <div class="text-center">
-        <p class="label-eyebrow mb-8" style="opacity:0" id="s1b-eye">Eine Frage</p>
-        <h2 class="font-display leading-[1.08]" style="font-size:clamp(2rem,4.4vw,4.2rem);">
-          <span id="typewriter"></span><span class="caret" id="caret"></span>
+        <p class="label-eyebrow mb-4" style="opacity:0" id="s1b-eye">Eine Frage</p>
+        <h2 class="font-display leading-[1.08]" style="font-size:clamp(2rem,4.4vw,4.2rem); position:relative;">
+          <!-- Invisible placeholder reserves the final 2-line height -->
+          <span class="tw-placeholder" aria-hidden="true">Was wäre wenn jedes KMU<br>einen Finanzchef hätte?</span>
+          <!-- Visible typewriter overlays from the top -->
+          <span style="position:absolute; top:0; left:0; right:0;">
+            <span id="typewriter"></span><span class="caret" id="caret"></span>
+          </span>
         </h2>
       </div>
     </div>
@@ -803,7 +1185,7 @@
         <p class="label-eyebrow mb-7" id="s1c-eye" style="opacity:0">Was wäre wenn</p>
         <h2 class="font-display leading-[0.92]" id="s1c-h2"
             style="font-size:clamp(3.8rem,9vw,8.5rem); opacity:0">
-          Julie<span style="color:var(--accent-warm)">.</span>ai
+          Julie<span class="fade-soft">.ai</span>
         </h2>
         <div class="mt-8 md:mt-10" id="s1c-sub" style="opacity:0">
           <p class="font-display" style="font-size:clamp(1.05rem,1.6vw,1.5rem); color:var(--ink-soft); max-width:24ch; line-height:1.35;">
@@ -874,112 +1256,101 @@
 <!-- ==================================================== -->
 <!-- SLIDE 2 — FINANCIAL CHAOS                            -->
 <!-- ==================================================== -->
-<section class="slide" id="s2" data-idx="1" style="background:var(--bg);">
+<section class="slide" id="s2" data-idx="1">
   <div class="chrome">
     <span class="chrome-label">002 &nbsp;—&nbsp; Status Quo</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
+    <span class="chrome-mark">Julie<span class="fade-soft">.ai</span></span>
   </div>
 
-  <div class="absolute inset-0 max-content px-10 md:px-16 flex flex-col items-center justify-center gap-7 py-14">
+  <div class="s2-row">
 
-    <!-- Header -->
-    <div class="text-center" style="max-width:60ch;">
-      <p class="label-eyebrow" id="s2-eye" style="opacity:0">Finanzielle Opazität</p>
+    <!-- LEFT — Dark editorial statement -->
+    <div class="s2-left">
+      <p class="label-eyebrow" id="s2-eye" style="opacity:0">Realität im Mittelstand</p>
       <h2 class="font-display mt-5" id="s2-h2"
-          style="font-size:clamp(1.4rem,2.1vw,2.1rem); line-height:1.25; letter-spacing:-0.03em;">
-        <span class="block" data-line="1" style="opacity:0">Monate ohne Buchungen.</span>
-        <span class="block" data-line="2" style="opacity:0; color:var(--ink-muted)">Keine Transparenz. Keine Echtzeit.</span>
-        <span class="block" data-line="3" style="opacity:0">
-          Margen zwischen
-          <span style="color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:.88em;">−80%</span>
-          <span style="color:var(--ink-muted);">und</span>
-          <span style="color:var(--ink); font-family:'JetBrains Mono',monospace; font-size:.88em;">+150%</span>.
-        </span>
+          style="font-size:clamp(1.9rem,3.4vw,3.1rem); line-height:1.04; letter-spacing:-0.035em; max-width:13ch; color:#fff;">
+        <span class="block" data-line="1" style="opacity:0">Gesteuert</span>
+        <span class="block" data-line="2" style="opacity:0">nach <span style="color:rgba(255,255,255,.55);">Bauchgefühl.</span></span>
       </h2>
+      <p class="mt-7" id="s2-sub" style="opacity:0; color:rgba(255,255,255,.65); font-size:14px; line-height:1.6; max-width:32ch;">
+        Buchhaltung nach Vorschrift. Für echte Analyse fehlt die Kapazität.
+        <span style="color:#fff; font-weight:500;">Niemand kann die Abweichungen einordnen.</span>
+      </p>
+      <p class="mt-6" id="s2-status" style="opacity:0; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.45);">
+        Status: <span style="color:#E47B65;">gesteuert im Blindflug.</span>
+      </p>
     </div>
 
-    <!-- Evidence Panel: a single contained card with the chaos inside -->
-    <div class="luma-card lg w-full" id="s2-evidence"
-         style="opacity:0; max-width:1080px; background:var(--bg-deep); padding:32px;">
+    <!-- RIGHT — Floating chaos zone -->
+    <div class="s2-chaos" id="s2-chaos">
 
-      <!-- Header inside panel -->
-      <div class="flex justify-between items-baseline mb-6">
-        <span class="font-mono text-[10px] uppercase tracking-[.24em] quiet">Was bei einer Übernahme typischerweise vorgefunden wird</span>
-        <span class="font-mono text-[10px] uppercase tracking-[.24em]" style="color:var(--ink);">06 Quellen · 0 verbunden</span>
+      <!-- Excel snippet (top-left cluster) -->
+      <div class="chaos-frag frag-excel" data-frag="1" style="top:11%; left:8%; --rot:-4deg; --dur:8.2s; --del:0s;">
+        <div class="tag">EXCEL · controlling_v8</div>
+        <div class="xgrid">
+          <div class="xc h">Q1</div><div class="xc h">Q2</div><div class="xc h">Q3</div><div class="xc h">Q4</div>
+          <div class="xc">38,4</div><div class="xc err">29,1</div><div class="xc">—</div><div class="xc">—</div>
+          <div class="xc">41,2</div><div class="xc">—</div><div class="xc">—</div><div class="xc dark">?</div>
+        </div>
+        <div class="meta-late">geändert vor 47 Tagen</div>
       </div>
 
-      <!-- Data source grid -->
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="s2-sources">
-
-        <div class="luma-card subtle src-card" data-src="1" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">Excel · Controlling</div>
-          <div style="font-size:13px; color:var(--ink); font-weight:500; letter-spacing:-0.01em;">controlling_v8_final.xlsx</div>
-          <div class="text-[11px] quiet mt-1.5">zuletzt geändert: vor 47 Tagen</div>
+      <!-- DATEV Export (top-right cluster) -->
+      <div class="chaos-frag frag-datev" data-frag="2" style="top:9%; left:42%; --rot:2.5deg; --dur:9s; --del:0.6s;">
+        <div class="tag">DATEV · Export 02/2026</div>
+        <div class="dlist">
+          1240&nbsp;Bank&nbsp;…&nbsp;<strong>86.412,00</strong><br/>
+          1400&nbsp;Ford.&nbsp;…&nbsp;<strong>211.045,80</strong><br/>
+          1600&nbsp;Kasse&nbsp;…&nbsp;<strong>1.430,00</strong>
         </div>
-
-        <div class="luma-card subtle src-card" data-src="2" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">DATEV · Export 02/2026</div>
-          <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; line-height:1.55; color:var(--ink-soft);">
-            1240&nbsp;Bank&nbsp;…&nbsp;<span style="color:var(--ink);">86.412,00</span><br/>
-            1400&nbsp;Ford.&nbsp;…&nbsp;<span style="color:var(--ink);">211.045,80</span><br/>
-            1600&nbsp;Kasse&nbsp;…&nbsp;<span style="color:var(--ink);">1.430,00</span>
-          </div>
-        </div>
-
-        <div class="luma-card subtle src-card" data-src="3" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">OPOS · Q1</div>
-          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.6; color:var(--ink-soft);">
-            offen: <span style="color:var(--ink); font-weight:500;">42</span><br/>
-            überfällig: <span style="color:var(--ink); font-weight:500;">17</span>
-          </div>
-          <div class="text-[11px] quiet mt-1.5">letzter Lauf: unbekannt</div>
-        </div>
-
-        <div class="luma-card subtle src-card" data-src="4" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">E-Mail · Buchhaltung</div>
-          <div style="font-size:12px; color:var(--ink-soft); line-height:1.5; font-style:italic;">
-            „OPOS-Lauf nicht vollständig, Daten für März fehlen noch …"
-          </div>
-        </div>
-
-        <div class="luma-card subtle src-card" data-src="5" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">PDF · BWA · Vormonat</div>
-          <div style="display:flex; flex-direction:column; gap:3.5px; margin-top:4px;">
-            <div style="height:5px; background:var(--line-soft); width:90%; border-radius:2px;"></div>
-            <div style="height:5px; background:var(--line-soft); width:70%; border-radius:2px;"></div>
-            <div style="height:5px; background:var(--line-soft); width:80%; border-radius:2px;"></div>
-            <div style="height:5px; background:var(--ink); width:55%; border-radius:2px;"></div>
-          </div>
-          <div class="text-[11px] quiet mt-2.5">Stand: vor 9 Wochen</div>
-        </div>
-
-        <div class="luma-card subtle src-card" data-src="6" style="padding:16px 18px; border-radius:14px;">
-          <div class="font-mono text-[9.5px] uppercase tracking-[.18em] quiet mb-2">KPI · Marge YoY</div>
-          <div style="display:flex; align-items:baseline; gap:8px;">
-            <span class="glitch-kpi" id="kpi-margin" style="font-size:22px; color:var(--ink); font-weight:600; letter-spacing:-0.035em;">+24%</span>
-            <span class="font-mono text-[10px] quiet">YoY</span>
-          </div>
-          <div class="text-[11px] quiet mt-1.5">je nach Quelle</div>
-        </div>
-
+        <div class="meta-late">12 Wochen alt</div>
+        <div class="stamp" style="top:-4px; right:6px; transform:rotate(-14deg);">ÜBERFÄLLIG</div>
       </div>
 
-      <!-- Calendar ribbon inside panel -->
-      <div class="hairline-soft mt-7 mb-5" style="background:rgba(0,0,0,.06);"></div>
-
-      <div class="flex items-center justify-between flex-wrap gap-4" id="s2-cal">
-        <div class="flex gap-2">
-          <div class="month-tile"><span class="num">01</span><span class="nm">JAN</span></div>
-          <div class="month-tile"><span class="num">02</span><span class="nm">FEB</span></div>
-          <div class="month-tile"><span class="num">03</span><span class="nm">MÄR</span></div>
-          <div class="month-tile late"><span class="num">04</span><span class="nm">APR · spät</span></div>
-          <div class="month-tile late"><span class="num">05</span><span class="nm">MAI · spät</span></div>
-          <div class="month-tile" style="opacity:.4"><span class="num">06</span><span class="nm">JUN</span></div>
-        </div>
-        <span class="font-mono text-[10px] uppercase tracking-[.24em] quiet" id="s2-cap" style="opacity:0">
-          Reporting&nbsp;·&nbsp;6 – 9 Wochen verzögert
-        </span>
+      <!-- WhatsApp from Steuerberater -->
+      <div class="chaos-frag frag-wapp" data-frag="3" style="top:32%; left:50%; --rot:-1.8deg; --dur:7.4s; --del:0.3s;">
+        <div class="wsender">Steuerberater · 18. Apr</div>
+        <div class="wbubble">„OPOS-Lauf ist nicht vollständig — Daten für März fehlen noch. Kommen Anfang nächster Woche."</div>
       </div>
+
+      <!-- Sticky note (middle cluster) -->
+      <div class="chaos-frag frag-sticky" data-frag="4" style="top:42%; left:14%; --rot:5deg; --dur:6.8s; --del:0.9s;">
+        <div class="stxt">Marge?</div>
+        <div class="sline"></div>
+        <div class="stiny">−80% · +24% · +150%</div>
+      </div>
+
+      <!-- PDF/BWA (middle cluster) -->
+      <div class="chaos-frag frag-pdf" data-frag="5" style="top:51%; left:34%; --rot:-3deg; --dur:8.8s; --del:1.1s;">
+        <div class="tag">PDF · BWA · Vormonat</div>
+        <div class="pbars">
+          <div class="pbar"></div>
+          <div class="pbar"></div>
+          <div class="pbar"></div>
+          <div class="pbar"></div>
+        </div>
+        <div class="meta-late">Stand: vor 9 Wochen</div>
+        <div class="stamp" style="bottom:8px; right:6px; transform:rotate(-8deg);">VERZÖGERT</div>
+      </div>
+
+      <!-- KPI conflict (bottom-left cluster) -->
+      <div class="chaos-frag frag-kpi" data-frag="6" style="top:64%; left:12%; --rot:-1.5deg; --dur:7.2s; --del:1.4s;">
+        <div class="tag">KPI · Marge YoY</div>
+        <div class="kvals">
+          <span class="kval k1">+24 %</span>
+          <span class="kval k2">−80 %</span>
+          <span class="kval k3">+150 %</span>
+        </div>
+        <div class="meta-late">drei Quellen · drei Werte</div>
+      </div>
+
+      <!-- Email (bottom-right cluster) -->
+      <div class="chaos-frag frag-email" data-frag="7" style="top:64%; left:42%; --rot:3deg; --dur:7.6s; --del:0.4s;">
+        <div class="tag">E-Mail · Buchhaltung</div>
+        <div class="esubj">Re: Marge Q1 — passt etwas&nbsp;nicht?</div>
+        <div class="ebody">„Können wir das nochmal durchgehen — Controlling und meine BWA weichen ab …"</div>
+      </div>
+
     </div>
 
   </div>
@@ -991,7 +1362,7 @@
 <section class="slide" id="s3" data-idx="2" style="background:var(--bg-paper);">
   <div class="chrome">
     <span class="chrome-label">003 &nbsp;—&nbsp; Ursprung</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
+    <span class="chrome-mark">Julie<span class="fade-soft">.ai</span></span>
   </div>
 
   <div class="absolute inset-0 max-content px-10 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -1012,68 +1383,82 @@
         Reportings, die nicht stimmen. Entscheidungen,
         die im Nebel getroffen werden.
       </p>
+      <p class="mt-5 reveal" id="s3-lede2" style="color:var(--ink); font-size:16px; line-height:1.5; font-weight:500; max-width:38ch;">
+        Heute bekommen unsere Nachfolger einen <span style="font-style:italic;">Finanzchef in die Westentasche.</span>
+      </p>
+      <p class="mt-2 reveal" id="s3-lede3" style="color:var(--ink-muted); font-size:13.5px; line-height:1.5; max-width:38ch;">
+        Aus dieser Erfahrung entstand Julie<span class="fade-soft">.ai</span>.
+      </p>
 
     </div>
 
-    <!-- Right: acquisition portfolio in Luma-style cards -->
+    <!-- Right: Eterniteam holding org chart -->
     <div class="lg:col-span-6" id="s3-acq">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      <div class="org-chart">
 
-        <div class="acq-card" data-acq="1">
-          <div class="acq-head">
-            <span class="acq-num">#01 &nbsp;·&nbsp; ÜBERNAHME</span>
-            <span class="acq-year">2021</span>
+        <!-- Holding: Eterniteam -->
+        <div class="org-parent" data-org="parent">
+          <div class="org-logo" id="et-logo">
+            <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-linecap="round">
+              <!-- Left figure (navy) -->
+              <circle cx="26" cy="24" r="9" fill="#1A2F45"/>
+              <path d="M 12 66 C 12 48 26 40 40 52" stroke="#1A2F45" stroke-width="9"/>
+              <!-- Right figure (sage) -->
+              <circle cx="54" cy="24" r="9" fill="#9CB394"/>
+              <path d="M 68 66 C 68 48 54 40 40 52" stroke="#9CB394" stroke-width="9"/>
+            </svg>
           </div>
-          <div class="acq-name">Industriedienstleister</div>
-          <div class="acq-meta">Süddeutschland · 38 MA · €&nbsp;6,2 M Umsatz</div>
-          <div class="acq-divider"></div>
-          <div class="acq-row"><span class="k">Letzte BWA</span><span class="v">4 Monate alt</span></div>
-          <div class="acq-row"><span class="k">OPOS</span><span class="v">nie gepflegt</span></div>
-          <div class="acq-row"><span class="k">Cashflow</span><span class="v">unbekannt</span></div>
+          <div>
+            <div class="org-name">Eterniteam</div>
+            <div class="org-meta">Holding · 4 Beteiligungen · 2021 – 2024</div>
+          </div>
         </div>
 
-        <div class="acq-card" data-acq="2">
-          <div class="acq-head">
-            <span class="acq-num">#02 &nbsp;·&nbsp; ÜBERNAHME</span>
-            <span class="acq-year">2022</span>
-          </div>
-          <div class="acq-name">IT- &amp; Service</div>
-          <div class="acq-meta">NRW · 24 MA · €&nbsp;3,8 M Umsatz</div>
-          <div class="acq-divider"></div>
-          <div class="acq-row"><span class="k">Reporting</span><span class="v">manuell · Excel</span></div>
-          <div class="acq-row"><span class="k">Margen Segment-Ebene</span><span class="v">nicht vorhanden</span></div>
-          <div class="acq-row"><span class="k">Forecast-Genauigkeit</span><span class="v">± 42 %</span></div>
-        </div>
+        <!-- Connection trunk -->
+        <div class="org-trunk" data-org="trunk"></div>
 
-        <div class="acq-card" data-acq="3">
-          <div class="acq-head">
-            <span class="acq-num">#03 &nbsp;·&nbsp; ÜBERNAHME</span>
-            <span class="acq-year">2023</span>
-          </div>
-          <div class="acq-name">Großhandel</div>
-          <div class="acq-meta">Hessen · 52 MA · €&nbsp;14,1 M Umsatz</div>
-          <div class="acq-divider"></div>
-          <div class="acq-row"><span class="k">OPOS-Stand</span><span class="v">6 Wochen alt</span></div>
-          <div class="acq-row"><span class="k">DSO</span><span class="v">63 Tage</span></div>
-          <div class="acq-row"><span class="k">Datenquellen</span><span class="v">9 unverbunden</span></div>
-        </div>
+        <!-- Horizontal bus -->
+        <div class="org-bus" data-org="bus"></div>
 
-        <div class="acq-card" data-acq="4">
-          <div class="acq-head">
-            <span class="acq-num">#04 &nbsp;·&nbsp; ÜBERNAHME</span>
-            <span class="acq-year">2024</span>
+        <!-- Children: 4 portfolio companies -->
+        <div class="org-children">
+          <div class="org-child" data-org="1">
+            <div class="org-child-head">
+              <span class="org-num">#01</span>
+              <span class="org-year">2021</span>
+            </div>
+            <div class="org-child-name">Lebensmittel-<br/>Distribution</div>
+            <div class="org-child-meta">Süddeutschland<br/>38 MA</div>
           </div>
-          <div class="acq-name">Manufacturing</div>
-          <div class="acq-meta">Bayern · 41 MA · €&nbsp;9,4 M Umsatz</div>
-          <div class="acq-divider"></div>
-          <div class="acq-row"><span class="k">Reporting</span><span class="v">3 Töchter getrennt</span></div>
-          <div class="acq-row"><span class="k">Konsolidierung</span><span class="v">händisch · Q</span></div>
-          <div class="acq-row"><span class="k">Marge je Auftrag</span><span class="v">unbekannt</span></div>
+          <div class="org-child" data-org="2">
+            <div class="org-child-head">
+              <span class="org-num">#02</span>
+              <span class="org-year">2022</span>
+            </div>
+            <div class="org-child-name">Bad-<br/>Sanierung</div>
+            <div class="org-child-meta">NRW<br/>24 MA</div>
+          </div>
+          <div class="org-child" data-org="3">
+            <div class="org-child-head">
+              <span class="org-num">#03</span>
+              <span class="org-year">2023</span>
+            </div>
+            <div class="org-child-name">Fenster<br/>&amp; Türen</div>
+            <div class="org-child-meta">Hessen<br/>52 MA</div>
+          </div>
+          <div class="org-child" data-org="4">
+            <div class="org-child-head">
+              <span class="org-num">#04</span>
+              <span class="org-year">2024</span>
+            </div>
+            <div class="org-child-name">KFZ-<br/>Werkstatt</div>
+            <div class="org-child-meta">Bayern<br/>41 MA</div>
+          </div>
         </div>
 
       </div>
 
-      <div class="mt-5 flex items-center gap-3" id="s3-foot" style="opacity:0">
+      <div class="mt-6 flex items-center gap-3 flex-wrap" id="s3-foot" style="opacity:0">
         <span class="lc-pill"><span class="pdot"></span>4 Übernahmen</span>
         <span class="lc-pill"><span class="pdot"></span>155 MA</span>
         <span class="lc-pill"><span class="pdot"></span>€ 33,5 M Umsatz</span>
@@ -1086,310 +1471,159 @@
 <!-- ==================================================== -->
 <!-- SLIDE 4 — TRANSFORMATION                             -->
 <!-- ==================================================== -->
-<section class="slide dark" id="s4" data-idx="3">
+<section class="slide" id="s4" data-idx="3" style="background:var(--bg);">
   <div class="chrome">
-    <span class="chrome-label">004 &nbsp;—&nbsp; Transformation</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
+    <span class="chrome-label">004 &nbsp;—&nbsp; Was Julie liefert</span>
+    <span class="chrome-mark">Julie<span class="fade-soft">.ai</span></span>
   </div>
 
-  <div class="absolute inset-0 flex items-center justify-center">
-    <div class="relative w-full h-full max-content">
+  <div class="absolute inset-0 max-content px-10 md:px-16 py-14 flex flex-col gap-10">
 
-      <!-- Connection nervous system (SVG behind nodes) -->
-      <svg id="s4-svg" viewBox="0 0 1280 760" preserveAspectRatio="xMidYMid meet"
-           class="absolute inset-0 w-full h-full" style="opacity:.85;">
-        <defs>
-          <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#FFFFFF" stop-opacity=".09"/>
-            <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
-          </radialGradient>
-        </defs>
-        <circle cx="640" cy="380" r="260" fill="url(#halo)"/>
-        <!-- Lines from center to nodes -->
-        <path class="connect-line" d="M 640 380 C 540 340, 360 290, 230 240"/>
-        <path class="connect-line" d="M 640 380 C 770 320, 940 280, 1060 240"/>
-        <path class="connect-line" d="M 640 380 C 540 460, 380 510, 230 540"/>
-        <path class="connect-line" d="M 640 380 C 770 460, 920 510, 1060 540"/>
-        <path class="connect-line" d="M 640 380 C 600 270, 600 170, 600 110"/>
-        <path class="connect-line" d="M 640 380 C 680 270, 680 170, 680 110"/>
-        <path class="connect-line" d="M 640 380 C 600 490, 600 590, 600 660"/>
-        <path class="connect-line" d="M 640 380 C 680 490, 680 590, 680 660"/>
-      </svg>
+    <!-- One pithy headline with breathing room -->
+    <div class="text-center" style="max-width:64ch; margin:0 auto;">
+      <p class="label-eyebrow" id="s4-eye" style="opacity:0">Der Finanzchef auf Abruf</p>
+      <h2 class="font-display mt-4" id="s4-h2"
+          style="opacity:0; font-size:clamp(2rem,3.6vw,3.2rem); line-height:1.08; letter-spacing:-0.035em;">
+        Stell die Frage. <span style="color:var(--ink-muted)">Bekomm den Report.</span>
+      </h2>
+    </div>
 
-      <!-- Center iPhone -->
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="iphone" id="s4-phone" style="opacity:0; transform:scale(.9);">
-          <div class="iphone-island"></div>
-          <div class="iphone-screen">
-            <div class="iphone-status">
-              <span>9:41</span>
-              <span class="iphone-status-right">
-                <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx=".5" fill="#111"/><rect x="4" y="4" width="3" height="6" rx=".5" fill="#111"/><rect x="8" y="2" width="3" height="8" rx=".5" fill="#111"/><rect x="12" y="0" width="3" height="10" rx=".5" fill="#111"/></svg>
-                <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" fill="none" stroke="#111" stroke-width="1"/><rect x="2" y="3" width="14" height="4" rx="1" fill="#111"/></svg>
-              </span>
-            </div>
-            <div class="wa-header">
-              <span class="wa-back">‹</span>
-              <div class="wa-avatar"></div>
-              <div class="wa-meta">
-                <span class="wa-name">Julie</span>
-                <span class="wa-status"><span class="online">●</span> online</span>
+    <!-- Minimalist demo: iPhone (chat) + Browser (report) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start" id="s4-demo" style="max-width:1180px; margin:0 auto; width:100%;">
+
+      <!-- LEFT — iPhone chat (interaction) -->
+      <div class="lg:col-span-5 flex flex-col items-center" id="s4-phone-wrap" style="opacity:0;">
+        <p class="label-eyebrow" style="margin-bottom:14px;">01 &nbsp;—&nbsp; Chat</p>
+        <div class="s4-phone-cage">
+          <div class="iphone" id="s4-phone">
+            <div class="iphone-island"></div>
+            <div class="iphone-screen">
+              <div class="iphone-status">
+                <span>9:41</span>
+                <span class="iphone-status-right">
+                  <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx=".5" fill="#111"/><rect x="4" y="4" width="3" height="6" rx=".5" fill="#111"/><rect x="8" y="2" width="3" height="8" rx=".5" fill="#111"/><rect x="12" y="0" width="3" height="10" rx=".5" fill="#111"/></svg>
+                  <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" fill="none" stroke="#111" stroke-width="1"/><rect x="2" y="3" width="14" height="4" rx="1" fill="#111"/></svg>
+                </span>
               </div>
-            </div>
-            <div class="wa-body" id="s4-wa">
-              <span class="wa-date">Donnerstag</span>
-              <div class="bubble b-me" data-msg="1">
-                Warum sinkt unsere Liquidität?
-                <span class="time">9:38 <span class="read">✓✓</span></span>
+              <div class="wa-header">
+                <span class="wa-back">‹</span>
+                <div class="wa-avatar"></div>
+                <div class="wa-meta">
+                  <span class="wa-name">Julie</span>
+                  <span class="wa-status"><span class="online">●</span> online</span>
+                </div>
               </div>
-              <div class="bubble b-them" data-msg="2">
-                Drei Faktoren spielen zusammen: Forderungen aus Q1 stehen seit
-                <strong style="font-weight:600">48&nbsp;Tagen</strong> offen, Lieferant&nbsp;X hat das Zahlungsziel
-                von 30 auf <strong style="font-weight:600">14&nbsp;Tage</strong> reduziert,
-                und die Marge im Segment&nbsp;A ist um <strong style="font-weight:600">4,2&nbsp;Punkte</strong> gesunken.
-                <span class="time">9:38</span>
+              <div class="wa-body" id="s4-wa">
+                <span class="wa-date">Heute</span>
+                <!-- Chat bubbles added by JS sequentially -->
               </div>
-            </div>
-            <div class="wa-input">
-              <span class="wa-input-plus">+</span>
-              <div class="wa-input-field"></div>
-              <span class="wa-input-cam">📷</span>
-              <span class="wa-input-mic">🎤</span>
+              <div class="wa-input">
+                <span class="wa-input-plus">+</span>
+                <div class="wa-input-field"></div>
+                <span class="wa-input-cam">📷</span>
+                <span class="wa-input-mic">🎤</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Surrounding nodes -->
-      <div class="node" style="top:28%; left:14%;" data-node="1"><span class="dot"></span>RECHNUNGEN</div>
-      <div class="node" style="top:28%; right:14%;" data-node="2"><span class="dot"></span>KUNDEN</div>
-      <div class="node" style="bottom:24%; left:14%;" data-node="3"><span class="dot"></span>MARGEN</div>
-      <div class="node" style="bottom:24%; right:14%;" data-node="4"><span class="dot"></span>LIEFERANTEN</div>
-      <div class="node" style="top:10%; left:43%;" data-node="5"><span class="dot"></span>BANK</div>
-      <div class="node" style="top:10%; right:43%;" data-node="6"><span class="dot"></span>OPOS</div>
-      <div class="node" style="bottom:8%; left:43%;" data-node="7"><span class="dot"></span>CASHFLOW</div>
-      <div class="node" style="bottom:8%; right:43%;" data-node="8"><span class="dot"></span>DATEV</div>
-
-      <!-- Caption -->
-      <div class="absolute left-1/2 -translate-x-1/2 text-center" style="bottom:32px;">
-        <p class="label-eyebrow" id="s4-cap" style="opacity:0">Ein finanzielles Nervensystem</p>
+      <!-- RIGHT — Live report preview (outcome) -->
+      <div class="lg:col-span-7 flex flex-col" id="s4-report-wrap" style="opacity:0;">
+        <p class="label-eyebrow" style="text-align:center; margin-bottom:14px;">02 &nbsp;—&nbsp; Monatsreport</p>
+        <div class="report-frame">
+          <div class="report-frame-bar">
+            <div class="rf-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="rf-title">report_2026-01.html&nbsp;·&nbsp;Julie.ai</div>
+            <a href="report_2026-01.html" target="_blank" class="rf-open">Vollbild&nbsp;↗</a>
+          </div>
+          <div style="position:relative;">
+            <iframe src="report_2026-01.html" class="report-iframe" id="s4-iframe" loading="lazy"
+                    title="Julie.ai · Monatsbericht"></iframe>
+            <div class="report-frame-fade"></div>
+          </div>
+        </div>
       </div>
+
     </div>
+
   </div>
 </section>
 
 <!-- ==================================================== -->
-<!-- SLIDE 5 — INTERACTIVE INTELLIGENCE                   -->
+<!-- SLIDE 6 — CTA / Pilotprogramm                        -->
 <!-- ==================================================== -->
-<section class="slide" id="s5" data-idx="4" style="background:var(--bg-paper);">
+<section class="slide" id="s7" data-idx="4" style="background:var(--bg);">
   <div class="chrome">
-    <span class="chrome-label">005 &nbsp;—&nbsp; Intelligenz</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
+    <span class="chrome-label">005 &nbsp;—&nbsp; Pilotprogramm</span>
+    <span class="chrome-mark">Julie<span class="fade-soft">.ai</span></span>
   </div>
 
-  <div class="absolute inset-0 max-content px-10 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+  <div class="absolute inset-0 max-content px-10 md:px-16 py-12 flex flex-col gap-8">
 
-    <div class="lg:col-span-5">
-      <p class="label-eyebrow reveal mb-8" id="s5-eye">Eine Frage. Eine Antwort.</p>
-      <h2 class="font-display leading-[1.04] reveal" id="s5-h2"
-          style="font-size:clamp(2rem,4vw,3.6rem); max-width:18ch;">
-        Intelligenz<span style="color:var(--accent-warm)">,</span><br/>
-        ohne Komplexität.
+    <!-- Header -->
+    <div class="text-center" style="max-width:64ch; margin:0 auto;">
+      <p class="label-eyebrow" id="s7-eye" style="opacity:0">Pilot 2026 · für M&amp;A-Berater</p>
+      <h2 class="font-display mt-4" id="s7-h2"
+          style="opacity:0; font-size:clamp(2rem,3.8vw,3.4rem); line-height:1.05; letter-spacing:-0.04em;">
+        Bring Julie<span class="fade-soft">.ai</span> zu deinen&nbsp;Mandanten.
       </h2>
-      <p class="lede mt-8 reveal" id="s5-lede">
-        Keine Dashboards. Keine Schulungen.
-        Eine Nachricht — und die relevanten Zusammenhänge
-        werden sichtbar.
+      <p class="lede mt-4" id="s7-sub" style="opacity:0; margin-left:auto; margin-right:auto; max-width:54ch;">
+        Wir öffnen Julie für ausgewählte M&amp;A-Berater.
+        Keine Implementierungskosten, keine Festverträge —
+        und für jeden Mandanten ein klarer Vorteil&nbsp;für&nbsp;dich.
       </p>
-
     </div>
 
-    <div class="lg:col-span-7" id="s5-card">
-      <!-- Question -->
-      <div class="qa-card">
-        <span class="qmark">Frage · 14:42</span>
-        <p class="font-display mt-3" style="font-size:clamp(1.2rem,1.8vw,1.65rem); line-height:1.4;">
-          „Warum ist unsere Marge schlechter als letztes&nbsp;Jahr?"
+    <!-- Two-column: Business Model + Berater-Hook -->
+    <div class="cta-grid" id="s7-cta" style="max-width:1080px; margin:0 auto; width:100%;">
+
+      <!-- Left: business model -->
+      <div class="cta-col cta-light" data-cta="1">
+        <div class="cta-eyebrow">Für deine Mandanten</div>
+        <div class="cta-title">Keine Eintrittsbarriere.</div>
+        <div class="cta-list">
+          <div class="cta-row"><span class="cta-num">01</span><div><strong>Keine Implementierungskosten.</strong> Kein Setup-Aufwand, kein IT-Projekt.</div></div>
+          <div class="cta-row"><span class="cta-num">02</span><div><strong>100% flexibel abgerechnet.</strong> Monatlich kündbar, nutzungsbasiert.</div></div>
+          <div class="cta-row"><span class="cta-num">03</span><div><strong>Günstiger</strong> als eine Sonderanfrage beim Steuerbüro oder eine Inhouse-Einstellung.</div></div>
+        </div>
+      </div>
+
+      <!-- Right: Berater-Hook (dark, highlighted) -->
+      <div class="cta-col cta-dark" data-cta="2">
+        <div class="cta-eyebrow" style="color:rgba(255,255,255,.55);">Dein Vorteil als Berater</div>
+        <div class="cta-title" style="color:#fff;">Eine kostenlose <span style="color:#E47B65;">Financial DD</span> — pro&nbsp;Mandant.</div>
+        <p style="color:rgba(255,255,255,.7); font-size:13.5px; line-height:1.55; margin-top:12px;">
+          Jeder Mandant, der Julie nutzt, gibt dir Echtzeit-Klarheit
+          zu den Reizthemen, die im Deal Schwung kosten:
         </p>
-      </div>
-
-      <!-- Connector -->
-      <div class="flex items-center gap-3 px-6 my-4" id="s5-bridge" style="opacity:0">
-        <span class="ink-dot"></span>
-        <div class="hairline-soft flex-1"></div>
-        <span class="font-mono text-[10px] uppercase tracking-[.24em] quiet">Julie analysiert</span>
-        <div class="hairline-soft flex-1"></div>
-        <span class="ink-dot"></span>
-      </div>
-
-      <!-- Answer -->
-      <div class="qa-card" id="s5-answer" style="opacity:0; transform:translateY(8px);">
-        <span class="qmark">Antwort</span>
-        <p class="mt-3" style="font-size:15px; line-height:1.6; color:var(--ink-soft); max-width:54ch;">
-          Die Rohmaterialkosten bei Lieferant&nbsp;X sind seit
-          März um&nbsp;<span style="color:var(--ink); font-weight:600">18%</span> gestiegen —
-          und dieser Lieferant betrifft <span style="color:var(--ink); font-weight:600">62%</span> deines
-          Wareneinkaufs im Segment&nbsp;A.
-        </p>
-
-        <div class="mt-6">
-          <div class="answer-row">
-            <span class="k">Brutto-Marge Segment&nbsp;A · Vorjahr</span>
-            <span class="v">38,4 %</span>
-          </div>
-          <div class="answer-row">
-            <span class="k">Brutto-Marge Segment&nbsp;A · heute</span>
-            <span class="v up">29,1 %</span>
-          </div>
-          <div class="answer-row">
-            <span class="k">Materialkosten Lieferant&nbsp;X · YoY</span>
-            <span class="v up">+18,2 %</span>
-          </div>
-          <div class="answer-row">
-            <span class="k">Anteil Lieferant&nbsp;X am Einkauf</span>
-            <span class="v">62 %</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ==================================================== -->
-<!-- SLIDE 6 — TRANSACTION READINESS                      -->
-<!-- ==================================================== -->
-<section class="slide" id="s6" data-idx="5" style="background:var(--bg-soft);">
-  <div class="chrome">
-    <span class="chrome-label">006 &nbsp;—&nbsp; Transaktionsreife</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
-  </div>
-
-  <div class="absolute inset-0 max-content px-10 md:px-16 grid grid-cols-1 lg:grid-cols-12 gap-14 items-center">
-
-    <div class="lg:col-span-5">
-      <p class="label-eyebrow reveal mb-8" id="s6-eye">Vor der Due Diligence</p>
-      <h2 class="font-display leading-[1.04] reveal" id="s6-h2"
-          style="font-size:clamp(2rem,4vw,3.6rem); max-width:16ch;">
-        Aus Unschärfe
-        <span class="block" style="color:var(--ink-muted)">wird&nbsp;Schärfe.</span>
-      </h2>
-      <p class="lede mt-8 reveal" id="s6-lede">
-        Julie schafft Transparenz, bevor sie verlangt&nbsp;wird —
-        und macht jedes Unternehmen verkaufsfähig,
-        verhandlungsfähig, kapitalfähig.
-      </p>
-
-      <div class="mt-10 reveal" id="s6-cells">
-        <div class="grid grid-cols-2 gap-3">
-          <div class="blur-cell" data-cell="1">
-            <div class="lbl">EBITDA</div>
-            <div class="val">€&nbsp;1,84&nbsp;M</div>
-          </div>
-          <div class="blur-cell" data-cell="2">
-            <div class="lbl">Cash Conversion</div>
-            <div class="val">71%</div>
-          </div>
-          <div class="blur-cell" data-cell="3">
-            <div class="lbl">Net Working Capital</div>
-            <div class="val">€&nbsp;620&nbsp;K</div>
-          </div>
-          <div class="blur-cell" data-cell="4">
-            <div class="lbl">DSO</div>
-            <div class="val">42 Tage</div>
-          </div>
+        <div class="cta-pills">
+          <span class="cta-pill"><span class="cta-pill-dot"></span>Working Capital</span>
+          <span class="cta-pill"><span class="cta-pill-dot"></span>Nettofinanzposition</span>
+          <span class="cta-pill"><span class="cta-pill-dot"></span>Quality of Earnings</span>
         </div>
       </div>
+
     </div>
 
-    <!-- Score panel — dark contained "instrument" card -->
-    <div class="lg:col-span-7 flex justify-center">
-      <div class="score-dark reveal" id="s6-score" style="width:100%; max-width:540px;">
-        <div class="text-center mb-7">
-          <span class="label-eyebrow">Financial Transparency Score</span>
-        </div>
-
-        <div class="relative mx-auto" style="width:300px; height:300px;">
-          <svg class="score-ring" viewBox="0 0 200 200" width="300" height="300">
-            <circle class="track" cx="100" cy="100" r="86"/>
-            <circle class="progress" id="score-prog" cx="100" cy="100" r="86" pathLength="100" stroke-dasharray="0 100"/>
-          </svg>
-          <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-            <span class="label-eyebrow" id="score-state">vor Julie</span>
-            <div class="font-display mt-2" style="font-size:80px; line-height:1; color:#fff; letter-spacing:-0.04em;">
-              <span id="score-num">31</span><span style="font-size:34px; color:rgba(255,255,255,.5);">%</span>
-            </div>
-            <span class="font-mono text-[10px] uppercase tracking-[.22em] quiet mt-3" id="score-sub">unstrukturierte Daten</span>
-          </div>
-        </div>
-
-        <div class="hairline-dark mt-8 mb-6"></div>
-
-        <div class="flex items-center justify-center gap-10 quiet text-xs font-mono uppercase tracking-[.2em]">
-          <span><span class="ink-dot"></span>&nbsp;&nbsp;vor Julie · 31%</span>
-          <span style="color:#fff"><span class="ink-dot" style="background:#fff;"></span>&nbsp;&nbsp;mit Julie · 87%</span>
-        </div>
-
+    <!-- Closing CTA bar -->
+    <div class="cta-closing" id="s7-mark" style="opacity:0;">
+      <div class="font-display" style="font-size:clamp(1.5rem,2.6vw,2rem); color:var(--ink); line-height:1; letter-spacing:-0.045em;">
+        Julie<span class="fade-soft">.ai</span>
+      </div>
+      <span class="font-mono text-[10px] uppercase tracking-[.24em] quiet" style="margin-top:2px;">Made in Germany · For the Mittelstand</span>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+        <a href="mailto:hello@julie.ai?subject=Pilot%202026" style="display:inline-flex; align-items:center; gap:8px; padding:11px 18px; background:#0A0A0A; color:#fff; border-radius:9999px; font-size:13px; font-weight:500; text-decoration:none; letter-spacing:-0.005em;">
+          Als Berater anmelden&nbsp;→
+        </a>
+        <a href="mailto:hello@julie.ai?subject=Demo" style="display:inline-flex; align-items:center; gap:8px; padding:11px 18px; background:transparent; color:var(--ink); border:1px solid var(--line); border-radius:9999px; font-size:13px; font-weight:500; text-decoration:none; letter-spacing:-0.005em;">
+          hello@julie.ai
+        </a>
       </div>
     </div>
 
-  </div>
-</section>
-
-<!-- ==================================================== -->
-<!-- SLIDE 7 — FUTURE INFRASTRUCTURE                      -->
-<!-- ==================================================== -->
-<section class="slide" id="s7" data-idx="6" style="background:var(--bg);">
-  <div class="chrome">
-    <span class="chrome-label">007 &nbsp;—&nbsp; Infrastruktur</span>
-    <span class="chrome-mark">Julie<span class="dot">.</span>ai</span>
-  </div>
-
-  <!-- Foreground content -->
-  <div class="absolute inset-0 flex flex-col items-center justify-center px-10 max-content gap-10 py-16">
-
-    <div class="text-center">
-      <p class="label-eyebrow reveal mb-7" id="s7-eye">Was wir bauen</p>
-      <h2 class="font-display reveal" id="s7-h2"
-          style="font-size:clamp(2rem,3.8vw,3.6rem); line-height:1.1; letter-spacing:-0.04em; max-width:22ch; margin:0 auto;">
-        Jedes KMU verdient
-        <span class="block" style="color:var(--ink-muted)">finanzielle&nbsp;Transparenz.</span>
-      </h2>
-    </div>
-
-    <!-- Vision pillars -->
-    <div class="vision-grid" id="s7-pillars">
-      <div class="vision-card" data-vc="1">
-        <span class="vc-num">01</span>
-        <div class="vc-title">Tausende KMUs.<br/>Eine Schnittstelle.</div>
-        <div class="vc-body">Eine Infrastruktur-Schicht für finanzielle Klarheit — kein weiteres Tool, das niemand öffnet.</div>
-      </div>
-      <div class="vision-card" data-vc="2">
-        <span class="vc-num">02</span>
-        <div class="vc-title">WhatsApp,<br/>nicht Software.</div>
-        <div class="vc-body">Erreichbar wie ein Mitarbeiter. Verfügbar wie ein Bürodienst. Intelligent wie ein CFO.</div>
-      </div>
-      <div class="vision-card" data-vc="3">
-        <span class="vc-num">03</span>
-        <div class="vc-title">Vom Chaos zur<br/>Transaktionsreife.</div>
-        <div class="vc-body">Julie macht Mittelstand-Unternehmen verkaufs-, verhandlungs- und kapitalfähig.</div>
-      </div>
-    </div>
-
-    <!-- Dark closing card -->
-    <div class="dark-closing" id="s7-mark" style="opacity:0;">
-      <div class="font-display" style="font-size:clamp(1.8rem,3.4vw,2.6rem); color:#fff; line-height:1; letter-spacing:-0.045em;">
-        Julie<span>.</span>ai
-      </div>
-      <p style="color:rgba(255,255,255,.5); margin-top:12px; font-size:10px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.24em;">
-        Finanzielle Klarheit · Erreichbar · Konversational
-      </p>
-      <div class="hairline-dark mt-5"></div>
-      <p style="color:rgba(255,255,255,.35); margin-top:14px; font-size:9.5px; font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.24em;">
-        Made in Germany · For the Mittelstand
-      </p>
-    </div>
   </div>
 </section>
 
@@ -1465,8 +1699,6 @@ function playSlide1(){
     .to('#s1-b', { opacity:1, duration:0.6 }, '<')
     .to('#s1b-eye', { opacity:1, duration:1.0 }, '+=0.1')
     .add(() => runTypewriter(), '+=0.2');
-
-  // Phase C handled inside typewriter callback
 }
 
 function runTypewriter(){
@@ -1474,17 +1706,34 @@ function runTypewriter(){
   const seq = [
     { text:'Was wäre wenn KMUs', hold:900, action:'delete' },
     { text:'Was wäre wenn jedes KMU', hold:900, action:'delete' },
-    { text:'Was wäre wenn jedes KMU einen Finanzchef hätte?', hold:1900, action:'finish' },
+    { text:'Was wäre wenn jedes KMU\neinen Finanzchef hätte?', hold:1900, action:'finish' },
   ];
   let stepIdx = 0;
   const typeSpeed = 42;
   const deleteSpeed = 22;
 
+  // Positions for the faded word inside the final string
+  const fadeStart = 'Was wäre wenn jedes KMU\neinen '.length;
+  const fadeEnd = fadeStart + 'Finanzchef'.length;
+
+  function render(current, isFinal){
+    if (isFinal && current.length > fadeStart){
+      const pre = current.slice(0, fadeStart);
+      const fadeText = current.slice(fadeStart, Math.min(current.length, fadeEnd));
+      const post = current.length > fadeEnd ? current.slice(fadeEnd) : '';
+      el.innerHTML = pre + '<span class="fade-soft">' + fadeText + '</span>' + post;
+    } else {
+      el.textContent = current;
+    }
+  }
+
   function typeStep(){
     const target = seq[stepIdx].text;
+    const isFinal = (stepIdx === seq.length - 1);
     let i = 0;
     const t = setInterval(() => {
-      el.textContent = target.slice(0, ++i);
+      const current = target.slice(0, ++i);
+      render(current, isFinal);
       if (i >= target.length){
         clearInterval(t);
         setTimeout(afterType, seq[stepIdx].hold);
@@ -1493,9 +1742,11 @@ function runTypewriter(){
   }
 
   function deleteStep(){
-    let i = el.textContent.length;
+    let current = el.textContent;
+    let i = current.length;
     const t = setInterval(() => {
-      el.textContent = el.textContent.slice(0, --i);
+      current = current.slice(0, --i);
+      el.textContent = current;
       if (i <= 0){
         clearInterval(t);
         stepIdx++;
@@ -1508,7 +1759,8 @@ function runTypewriter(){
     const action = seq[stepIdx].action;
     if (action === 'delete') deleteStep();
     else if (action === 'finish'){
-      // gentle settle, then transition to Phase C
+      const caret = document.getElementById('caret');
+      if (caret) caret.style.display = 'none';
       gsap.to('#s1-b', { opacity:0, y:-10, duration:1.1, delay:0.6, ease:EASE });
       setTimeout(toPhaseC, 1900);
     }
@@ -1604,35 +1856,22 @@ function addS1FollowUp(){
 function playSlide2(){
   const tl = gsap.timeline({ defaults:{ ease:EASE } });
 
+  // Left: eyebrow → headline (2 lines) → sub → status
   tl.fromTo('#s2-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
-    .fromTo('#s2-h2 [data-line="1"]', { opacity:0, y:12 }, { opacity:1, y:0, duration:1.0 }, '-=0.3')
-    .fromTo('#s2-h2 [data-line="2"]', { opacity:0, y:12 }, { opacity:1, y:0, duration:1.0 }, '+=0.15')
-    .fromTo('#s2-h2 [data-line="3"]', { opacity:0, y:12 }, { opacity:1, y:0, duration:1.0 }, '+=0.15')
-    .to('#s2-evidence', { opacity:1, duration:1.2 }, '+=0.25');
+    .fromTo('#s2-h2 [data-line="1"]', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.0 }, '-=0.3')
+    .fromTo('#s2-h2 [data-line="2"]', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.0 }, '+=0.15')
+    .to('#s2-sub', { opacity:1, duration:1.0 }, '+=0.15')
+    .to('#s2-status', { opacity:1, duration:0.9 }, '+=0.2');
 
-  // Stagger the source cards inside the evidence panel
+  // Right: chaos fragments stagger in (papers landing on desk)
+  const frags = document.querySelectorAll('#s2-chaos .chaos-frag');
+  frags.forEach((f, i) => {
+    setTimeout(() => f.classList.add('in'), 700 + i*180);
+  });
+  // After all fragments are in, kick off continuous float animation
   setTimeout(() => {
-    document.querySelectorAll('#s2-sources .src-card').forEach((c, i) => {
-      setTimeout(() => c.classList.add('show'), i*120);
-    });
-  }, 4400);
-
-  // Caption after sources land
-  gsap.to('#s2-cap', { opacity:1, duration:1.0, delay:5.6 });
-
-  // KPI glitch sequence — monochrome
-  setTimeout(() => {
-    const el = document.getElementById('kpi-margin');
-    if (!el) return;
-    const seq = ['+24%','−80%','+150%','+24%'];
-    let i = 0;
-    const run = () => {
-      el.textContent = seq[i % seq.length];
-      i++;
-      if (i < 10) setTimeout(run, 950);
-    };
-    setTimeout(run, 600);
-  }, 5200);
+    frags.forEach(f => f.classList.add('float'));
+  }, 700 + frags.length*180 + 1100);
 }
 
 /* ==================================================
@@ -1642,140 +1881,167 @@ function playSlide3(){
   const tl = gsap.timeline({ defaults:{ ease:EASE } });
   tl.fromTo('#s3-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
     .fromTo('#s3-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3')
-    .fromTo('#s3-lede', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.4');
+    .fromTo('#s3-lede', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.4')
+    .fromTo('#s3-lede2', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 }, '-=0.5')
+    .fromTo('#s3-lede3', { opacity:0, y:6 }, { opacity:1, y:0, duration:0.9 }, '-=0.4');
 
-  // Acquisition cards — staggered reveal
-  document.querySelectorAll('#s3-acq .acq-card').forEach((c, i) => {
-    setTimeout(() => c.classList.add('show'), 700 + i*220);
+  // Org chart — staged reveal: parent → trunk → bus → children
+  const parent = document.querySelector('#s3-acq .org-parent');
+  const trunk = document.querySelector('#s3-acq .org-trunk');
+  const bus = document.querySelector('#s3-acq .org-bus');
+  const children = document.querySelectorAll('#s3-acq .org-child');
+
+  setTimeout(() => parent && parent.classList.add('show'), 600);
+  setTimeout(() => trunk && trunk.classList.add('show'), 1300);
+  setTimeout(() => bus && bus.classList.add('show'), 1650);
+  children.forEach((c, i) => {
+    setTimeout(() => c.classList.add('show'), 2050 + i*160);
   });
-  gsap.to('#s3-foot', { opacity:1, duration:1.2, delay:2.2 });
+  gsap.to('#s3-foot', { opacity:1, duration:1.2, delay:3.2 });
 }
 
 /* ==================================================
-   SLIDE 4 — TRANSFORMATION
+   SLIDE 4 — Stell die Frage. Bekomm den Report.
+   (Merged: iPhone chat demo + live Report preview)
    ================================================== */
 function playSlide4(){
   const tl = gsap.timeline({ defaults:{ ease:EASE } });
-  // Phone enters first
-  tl.to('#s4-phone', { opacity:1, scale:1, duration:1.6, ease:EASE_OUT });
+  tl.fromTo('#s4-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
+    .fromTo('#s4-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3');
 
-  // Draw connection lines
-  const lines = document.querySelectorAll('#s4-svg .connect-line');
-  lines.forEach((p, i) => {
-    const len = p.getTotalLength();
-    p.style.strokeDasharray = len;
-    p.style.strokeDashoffset = len;
-    gsap.to(p, { strokeDashoffset:0, duration:1.8, ease:'power2.inOut', delay:1.0 + i*0.12 });
+  // iPhone slides in from the left
+  gsap.fromTo('#s4-phone-wrap',
+    { opacity:0, x:-20 },
+    { opacity:1, x:0, duration:1.4, delay:1.0, ease:EASE_OUT });
+
+  // Report slides in from the right (slightly later)
+  gsap.fromTo('#s4-report-wrap',
+    { opacity:0, x:20 },
+    { opacity:1, x:0, duration:1.4, delay:1.3, ease:EASE_OUT });
+
+  // Start the 3-step chat demo after both visible
+  setTimeout(() => playS4Chat(), 2400);
+}
+
+function playS4Chat(){
+  const wa = document.getElementById('s4-wa');
+  if (!wa) return;
+
+  // Chat script: 3 exchanges demonstrating Monatsreporting, Budget, Deep Dive
+  const sequence = [
+    {
+      kind:'me',
+      text:'Wie war März?',
+      time:'10:23',
+      delay:200,
+    },
+    { kind:'thinking', delay:900 },
+    {
+      kind:'them',
+      html:'März lief solide. <strong style="font-weight:600">Umsatz 391&nbsp;K&nbsp;€</strong>, EBITDA <strong style="font-weight:600">45&nbsp;K&nbsp;€</strong>. Marge Segment&nbsp;A schwach — soll ich&nbsp;aufschlüsseln?',
+      time:'10:24',
+      delay:1900,
+      feat:1,
+    },
+    {
+      kind:'me',
+      text:'Reicht der Cashflow für 2 Einstellungen?',
+      time:'10:26',
+      delay:3200,
+    },
+    { kind:'thinking', delay:3800 },
+    {
+      kind:'them',
+      html:'Bei aktueller Run-Rate: ja. Cashflow trägt <strong style="font-weight:600">4,2 Monate</strong> Mehrkosten. Tipp: erst Lieferant&nbsp;X verhandeln, dann starten.',
+      time:'10:26',
+      delay:4800,
+      feat:2,
+    },
+    {
+      kind:'me',
+      text:'Welche OPOS sind überfällig?',
+      time:'10:28',
+      delay:6100,
+    },
+    { kind:'thinking', delay:6700 },
+    {
+      kind:'them',
+      html:'<strong style="font-weight:600">6 Positionen, gesamt 87&nbsp;K&nbsp;€.</strong> Top-Risiko: Kunde&nbsp;Y (<strong style="font-weight:600">42&nbsp;K&nbsp;€</strong>, 48 Tage). Mahnschreiben aufsetzen?',
+      time:'10:28',
+      delay:7600,
+      feat:3,
+    },
+  ];
+
+  let currentThinkingEl = null;
+
+  sequence.forEach((step) => {
+    setTimeout(() => {
+      if (step.kind === 'thinking'){
+        // Add a typing-indicator bubble
+        const t = document.createElement('div');
+        t.className = 'bubble b-them thinking';
+        t.style.width = 'fit-content';
+        t.innerHTML = '<span></span><span></span><span></span>';
+        wa.appendChild(t);
+        requestAnimationFrame(() => t.classList.add('in'));
+        currentThinkingEl = t;
+      } else if (step.kind === 'me'){
+        const b = document.createElement('div');
+        b.className = 'bubble b-me';
+        b.innerHTML = `${step.text} <span class="time">${step.time} <span class="read">✓✓</span></span>`;
+        wa.appendChild(b);
+        requestAnimationFrame(() => b.classList.add('in'));
+      } else if (step.kind === 'them'){
+        // Remove previous thinking indicator
+        if (currentThinkingEl){
+          currentThinkingEl.remove();
+          currentThinkingEl = null;
+        }
+        const b = document.createElement('div');
+        b.className = 'bubble b-them';
+        b.innerHTML = `${step.html} <span class="time">${step.time}</span>`;
+        wa.appendChild(b);
+        requestAnimationFrame(() => b.classList.add('in'));
+      }
+      // Auto-scroll chat to bottom
+      requestAnimationFrame(() => {
+        wa.scrollTop = wa.scrollHeight;
+      });
+    }, step.delay);
   });
-
-  // Nodes
-  const nodes = document.querySelectorAll('#s4 .node');
-  nodes.forEach((n, i) => {
-    gsap.to(n, { opacity:1, y:0, duration:1.0, delay:1.6 + i*0.10, ease:EASE });
-  });
-
-  // Chat bubbles
-  setTimeout(() => {
-    const bubs = document.querySelectorAll('#s4-wa .bubble');
-    bubs.forEach((b, i) => setTimeout(() => b.classList.add('in'), 400 + i*900));
-  }, 2400);
-
-  // Caption
-  gsap.to('#s4-cap', { opacity:1, duration:1.4, delay:3.4 });
 }
 
 /* ==================================================
-   SLIDE 5 — INTELLIGENCE
-   ================================================== */
-function playSlide5(){
-  const tl = gsap.timeline({ defaults:{ ease:EASE } });
-  tl.fromTo('#s5-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
-    .fromTo('#s5-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3')
-    .fromTo('#s5-lede', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.5')
-    .fromTo('#s5-card .qa-card:first-child',
-            { opacity:0, y:20 },
-            { opacity:1, y:0, duration:1.2 }, '-=0.8')
-    .to('#s5-bridge', { opacity:1, duration:1.0 }, '+=0.6')
-    .to('#s5-answer', { opacity:1, y:0, duration:1.4 }, '+=0.4');
-}
-
-/* ==================================================
-   SLIDE 6 — TRANSACTION READINESS
-   ================================================== */
-function playSlide6(){
-  const tl = gsap.timeline({ defaults:{ ease:EASE } });
-  tl.fromTo('#s6-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
-    .fromTo('#s6-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3')
-    .fromTo('#s6-lede', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.5')
-    .fromTo('#s6-cells', { opacity:0 }, { opacity:1, duration:1.0 }, '-=0.4')
-    .fromTo('#s6-score', { opacity:0 }, { opacity:1, duration:1.4 }, '-=0.6');
-
-  // First: render 31% ring
-  const prog = document.getElementById('score-prog');
-  setTimeout(() => {
-    prog.style.strokeDasharray = '31 100';
-  }, 1200);
-
-  // After pause, sharpen cells + go to 87%
-  setTimeout(() => {
-    document.querySelectorAll('#s6-cells .blur-cell').forEach((c, i) => {
-      setTimeout(() => c.classList.add('sharp'), i*250);
-    });
-  }, 2800);
-
-  setTimeout(() => {
-    // animate score to 87
-    const numEl = document.getElementById('score-num');
-    const stateEl = document.getElementById('score-state');
-    const subEl = document.getElementById('score-sub');
-    stateEl.textContent = 'mit Julie';
-    stateEl.style.color = '#fff';
-    stateEl.style.opacity = '1';
-    subEl.textContent = 'transaktionsreif';
-    prog.style.strokeDasharray = '87 100';
-
-    const start = 31, end = 87, dur = 2200, t0 = performance.now();
-    function tick(t){
-      const k = Math.min(1, (t - t0) / dur);
-      const eased = 1 - Math.pow(1 - k, 3);
-      numEl.textContent = Math.round(start + (end - start) * eased);
-      if (k < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }, 4200);
-
-}
-
-/* ==================================================
-   SLIDE 7 — FUTURE
+   SLIDE 5 — CTA / Pilotprogramm
    ================================================== */
 function playSlide7(){
   const tl = gsap.timeline({ defaults:{ ease:EASE } });
   tl.fromTo('#s7-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
-    .fromTo('#s7-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3');
+    .fromTo('#s7-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3')
+    .fromTo('#s7-sub', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.5');
 
-  // Vision pillars stagger
-  document.querySelectorAll('#s7-pillars .vision-card').forEach((c, i) => {
-    setTimeout(() => c.classList.add('show'), 1200 + i*220);
+  // CTA columns stagger — left then right
+  document.querySelectorAll('#s7-cta .cta-col').forEach((c, i) => {
+    setTimeout(() => c.classList.add('show'), 1200 + i*250);
   });
 
-  // Dark closing mark
+  // Closing CTA bar
   gsap.fromTo('#s7-mark',
-    { opacity:0, y:18 },
-    { opacity:1, y:0, duration:1.6, delay:2.6, ease:EASE_OUT });
+    { opacity:0, y:14 },
+    { opacity:1, y:0, duration:1.4, delay:2.4, ease:EASE_OUT });
 }
 
 /* ==================================================
    DISPATCH
    ================================================== */
+
 function playSlide(id){
   switch(id){
     case 's1': playSlide1(); break;
     case 's2': playSlide2(); break;
     case 's3': playSlide3(); break;
     case 's4': playSlide4(); break;
-    case 's5': playSlide5(); break;
-    case 's6': playSlide6(); break;
     case 's7': playSlide7(); break;
   }
 }
