@@ -44,10 +44,10 @@
   }
   .font-mono{ font-family:'JetBrains Mono', monospace; letter-spacing:0; }
 
-  /* Editorial soft de-emphasis — uniform opacity + lighter weight, fully legible */
+  /* Editorial soft de-emphasis — opacity only, weight stays the same
+     so character widths don't shift (critical for the typewriter line). */
   .fade-soft{
     opacity: 0.55;
-    font-weight: 400;
   }
 
   /* Typewriter container — preserve line breaks, reserve final-state height
@@ -182,6 +182,16 @@
     background:#0A0A0A;
     display:flex; align-items:center; justify-content:center;
     flex-shrink:0;
+    position:relative;
+  }
+  .wa-avatar::before{
+    content:'J';
+    font-family:'Inter Tight', sans-serif;
+    font-weight:600; font-size:18px;
+    color:#fff;
+    letter-spacing:-0.04em;
+    line-height:1;
+    margin-top:-1px;
   }
   .wa-meta{ display:flex; flex-direction:column; flex:1; }
   .wa-name{ font-size:15.5px; font-weight:600; color:#111; letter-spacing:-0.01em; line-height:1.1; }
@@ -485,6 +495,456 @@
       height:calc(620px * 0.68);
     }
     .s4-phone-cage > .iphone{ transform:scale(0.68); }
+  }
+
+  /* iOS push notification (Slide 4) */
+  .ios-push{
+    position:absolute;
+    top:52px; left:10px; right:10px;
+    background:rgba(245,245,247,0.86);
+    -webkit-backdrop-filter:blur(20px);
+    backdrop-filter:blur(20px);
+    border-radius:18px;
+    padding:11px 13px 12px;
+    display:flex; gap:10px; align-items:flex-start;
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.18),
+      0 2px 8px rgba(0,0,0,.06),
+      inset 0 0 0 .5px rgba(0,0,0,.06);
+    z-index:20;
+    opacity:0;
+    transform:translateY(-90px) scale(.96);
+    transition:opacity .55s cubic-bezier(.16,1,.3,1),
+               transform .65s cubic-bezier(.16,1,.3,1);
+    pointer-events:none;
+  }
+  .ios-push.in{ opacity:1; transform:translateY(0) scale(1); }
+  .ios-push.out{ opacity:0; transform:translateY(-90px) scale(.96); }
+  .ios-push-icon{
+    width:34px; height:34px; border-radius:9px;
+    background:#0A0A0A;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    color:#fff; font-family:'Inter Tight',sans-serif;
+    font-weight:600; font-size:17px; letter-spacing:-0.02em;
+  }
+  .ios-push-body{ flex:1; min-width:0; }
+  .ios-push-meta{
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:'Inter',sans-serif;
+    font-size:10px; color:#3a3a3a; letter-spacing:.06em;
+    text-transform:uppercase;
+    margin-bottom:3px;
+  }
+  .ios-push-meta-name{ font-weight:600; letter-spacing:.08em; }
+  .ios-push-meta-time{ color:#7a7a7a; letter-spacing:.04em; }
+  .ios-push-title{
+    font-family:'Inter',sans-serif;
+    font-size:12.5px; font-weight:600; color:#111;
+    letter-spacing:-0.005em; line-height:1.3;
+  }
+  .ios-push-text{
+    font-family:'Inter',sans-serif;
+    font-size:12px; color:#3a3a3a;
+    line-height:1.4; margin-top:2px;
+  }
+  /* Alert variant for anomaly push */
+  .ios-push.is-alert .ios-push-icon{
+    background:#C0563F;
+  }
+  .ios-push.is-alert .ios-push-meta-name{ color:#C0563F; }
+
+  /* ===== Rich link-preview bubble (Julie sends report link) ===== */
+  .bubble.b-card{
+    padding:0; overflow:hidden;
+    width:86%;
+    background:#fff;
+    border-bottom-left-radius:5px;
+    position:relative;
+    cursor:pointer;
+    box-shadow:0 1px 1px rgba(0,0,0,.05);
+  }
+  .bubble.b-card .b-card-preview{
+    position:relative;
+    background:linear-gradient(135deg, #F4EFE2 0%, #ECE3CA 70%, #DDD2B1 100%);
+    padding:12px 13px 11px;
+    overflow:hidden;
+  }
+  .bubble.b-card .b-card-preview-eyebrow{
+    display:flex; align-items:center; justify-content:space-between;
+    font-family:'JetBrains Mono', monospace;
+    font-size:8px; letter-spacing:.18em; text-transform:uppercase;
+    color:#7a6e54;
+    margin-bottom:8px;
+  }
+  .bubble.b-card .b-card-preview-eyebrow .dot{
+    width:5px; height:5px; border-radius:9999px;
+    background:#3b3b3b;
+    margin-right:4px; display:inline-block; vertical-align:middle;
+  }
+  .bubble.b-card .b-card-kpis{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:6px;
+  }
+  .bubble.b-card .b-card-kpi{
+    display:flex; flex-direction:column; gap:1px;
+    padding:1px 0;
+  }
+  .bubble.b-card .b-card-kpi-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:7.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:#7a6e54;
+    line-height:1.2;
+  }
+  .bubble.b-card .b-card-kpi-value{
+    font-family:'Inter', sans-serif;
+    font-weight:600; font-size:12.5px;
+    letter-spacing:-0.015em;
+    color:#1a1612;
+    line-height:1.15;
+  }
+  .bubble.b-card .b-card-kpi-trend{
+    font-family:'JetBrains Mono', monospace;
+    font-size:8.5px; letter-spacing:.02em;
+    margin-top:1px;
+    display:inline-flex; align-items:center; gap:2px;
+  }
+  .bubble.b-card .b-card-kpi-trend.up{   color:#2f7d3f; }
+  .bubble.b-card .b-card-kpi-trend.down{ color:#B85A45; }
+  .bubble.b-card .b-card-kpi-trend.flat{ color:#7a6e54; }
+  .bubble.b-card .b-card-meta{
+    padding:10px 13px 9px;
+    border-top:1px solid rgba(0,0,0,.06);
+  }
+  .bubble.b-card .b-card-title{
+    font-weight:600; font-size:13.5px; letter-spacing:-0.005em;
+    color:#111; line-height:1.3;
+  }
+  .bubble.b-card .b-card-sub{
+    font-size:11px; color:#7a7a7a;
+    margin-top:3px;
+    letter-spacing:.01em;
+  }
+  .bubble.b-card .b-card-time{
+    display:block; text-align:right;
+    padding:0 13px 8px;
+    font-size:10.5px; color:#8d8a85;
+    line-height:1;
+  }
+
+  /* Pulsing hint that the card is tappable */
+  .bubble.b-card.pulsing{
+    animation: cardPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes cardPulse{
+    0%,100%{ box-shadow:0 1px 1px rgba(0,0,0,.05), 0 0 0 0 rgba(10,10,10,0); }
+    50%{    box-shadow:0 3px 12px rgba(0,0,0,.12), 0 0 0 5px rgba(10,10,10,.05); }
+  }
+  /* Tapped state */
+  .bubble.b-card.tapped{
+    transform: scale(.96);
+    transition: transform .25s cubic-bezier(.16,1,.3,1);
+  }
+
+  /* Tap ripple indicator over the card */
+  .tap-indicator{
+    position:absolute; width:54px; height:54px;
+    border-radius:9999px;
+    background:rgba(10,10,10,.16);
+    border:1.5px solid rgba(10,10,10,.34);
+    pointer-events:none;
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.3);
+    z-index:30;
+  }
+  .tap-indicator.tapping{
+    animation: tapPulse .6s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  @keyframes tapPulse{
+    0%{   opacity:0; transform:translate(-50%,-50%) scale(.3); }
+    30%{  opacity:1; transform:translate(-50%,-50%) scale(1); }
+    100%{ opacity:0; transform:translate(-50%,-50%) scale(1.9); }
+  }
+
+  /* ===== Inline action buttons inside Julie's bubbles ===== */
+  .bubble .b-actions{
+    display:flex; gap:6px;
+    margin-top:9px; margin-bottom:1px;
+  }
+  .b-action-btn{
+    flex:1;
+    font-family:'Inter', sans-serif;
+    font-size:12px; font-weight:500;
+    padding:7px 10px;
+    border-radius:9999px;
+    border:1px solid rgba(0,0,0,.12);
+    background:#fff;
+    color:#1a1612;
+    letter-spacing:-0.005em;
+    cursor:pointer;
+    transition: transform .25s cubic-bezier(.16,1,.3,1),
+                background .35s cubic-bezier(.16,1,.3,1),
+                color .35s cubic-bezier(.16,1,.3,1),
+                border-color .35s cubic-bezier(.16,1,.3,1);
+  }
+  .b-action-btn.primary{
+    background:#0A0A0A;
+    color:#fff;
+    border-color:#0A0A0A;
+  }
+  .b-action-btn.pressed{
+    transform: scale(.94);
+    background:#2f7d3f !important;
+    color:#fff !important;
+    border-color:#2f7d3f !important;
+  }
+  .b-action-btn.dimmed{
+    opacity:.45;
+    transform: scale(.97);
+  }
+
+  /* ===== Anomaly alert bubble (Julie raises an exception) ===== */
+  .bubble.b-them.b-alert{
+    background:#FFF7F4;
+    border-left:3px solid #E47B65;
+    padding-left:13px;
+  }
+  .bubble.b-them.b-alert .alert-tag{
+    display:flex; align-items:center; gap:6px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+    font-weight:600; color:#C0563F;
+    margin-bottom:6px;
+  }
+  .bubble.b-them.b-alert .alert-dot{
+    width:6px; height:6px; border-radius:9999px;
+    background:#E47B65;
+    box-shadow:0 0 0 0 rgba(228,123,101,.6);
+    animation: alertPulse 1.8s ease-out infinite;
+  }
+  @keyframes alertPulse{
+    0%{   box-shadow:0 0 0 0 rgba(228,123,101,.65); }
+    70%{  box-shadow:0 0 0 9px rgba(228,123,101,0); }
+    100%{ box-shadow:0 0 0 0 rgba(228,123,101,0); }
+  }
+
+  .report-frame{ position:relative; }
+
+  /* ===== iPhone home screen + chat view (Slide 4) ===== */
+  .iphone-status{
+    transition: color .55s cubic-bezier(.16,1,.3,1);
+  }
+  .iphone-status svg rect{
+    transition: fill .55s cubic-bezier(.16,1,.3,1),
+                stroke .55s cubic-bezier(.16,1,.3,1);
+  }
+  .iphone-screen.is-locked .iphone-status{ color:#fff; }
+  .iphone-screen.is-locked .iphone-status svg rect[fill="#111"]{ fill:#fff; }
+  .iphone-screen.is-locked .iphone-status svg rect[stroke="#111"]{ stroke:#fff; }
+
+  .iphone-content{
+    flex:1; position:relative;
+    overflow:hidden;
+  }
+  .iphone-home, .iphone-chat{
+    position:absolute; inset:0;
+    transition: opacity .55s cubic-bezier(.16,1,.3,1);
+  }
+  /* Modern iOS-style ocean wallpaper, gradient-only */
+  .iphone-home{
+    background:
+      radial-gradient(ellipse 180% 70% at 50% 102%, rgba(228,238,240,.42) 0%, rgba(228,238,240,0) 55%),
+      radial-gradient(ellipse 110% 55% at 75% 35%, rgba(60,200,200,.22) 0%, transparent 60%),
+      radial-gradient(ellipse 90% 60% at 25% 75%, rgba(20,80,90,.4) 0%, transparent 70%),
+      linear-gradient(168deg, #1d6f80 0%, #0e5a66 28%, #0a4a54 52%, #133f48 78%, #0c2e36 100%);
+    display:flex; flex-direction:column;
+    padding:14px 6px 6px;
+    z-index:2;
+  }
+  .iphone-home.is-hidden{ opacity:0; pointer-events:none; }
+  .iphone-home-pages{
+    display:flex; justify-content:center; gap:5px;
+    margin:auto auto 8px;       /* push to bottom; sits above the dock */
+  }
+  .iphone-home-pages span{
+    width:5px; height:5px; border-radius:9999px;
+    background:rgba(255,255,255,.5);
+  }
+  .iphone-home-pages span.active{ background:#fff; }
+
+  .iphone-home-grid{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:14px 6px;
+    padding:14px 8px 4px;
+  }
+  /* App tile = icon + label */
+  .htile{
+    display:flex; flex-direction:column; align-items:center;
+    gap:5px;
+  }
+  .htile-icon{
+    position:relative;
+    width:88%;
+    aspect-ratio:1;
+    border-radius:13px;
+    box-shadow:
+      0 2px 6px rgba(0,0,0,.32),
+      inset 0 1px 0 rgba(255,255,255,.10);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .htile-icon svg{ width:62%; height:62%; }
+  .htile-label{
+    font-family:'Inter',sans-serif;
+    font-size:7.5px; font-weight:500;
+    color:#fff;
+    text-shadow:0 1px 2px rgba(0,0,0,.5);
+    letter-spacing:0.005em;
+    line-height:1;
+    text-align:center;
+    white-space:nowrap;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+  /* Notification badge */
+  .htile-icon .htile-badge{
+    position:absolute; top:-5px; right:-5px;
+    min-width:16px; height:16px;
+    border-radius:9999px;
+    background:#FF3B30;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    font-size:10px; font-weight:600;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 4px;
+    box-shadow:0 1px 3px rgba(0,0,0,.4);
+    opacity:0; transform:scale(.4);
+    transition: opacity .35s ease, transform .45s cubic-bezier(.5,-0.5,.3,1.5);
+  }
+  .htile.has-badge .htile-badge{ opacity:1; transform:scale(1); }
+
+  /* Icon backgrounds — close to iOS defaults */
+  .ic-facetime  { background:linear-gradient(180deg,#52E876,#34C759); }
+  .ic-calendar  { background:#fff; }
+  .ic-notes     { background:linear-gradient(180deg,#FBE6A2,#FAD566); }
+  .ic-reminders { background:#fff; }
+  .ic-weather   { background:linear-gradient(180deg,#62B5FB,#1F7CFF); }
+  .ic-camera    { background:linear-gradient(180deg,#5A5A5C,#1c1c1e); }
+  .ic-photos    { background:#fff; }
+  .ic-maps      { background:linear-gradient(180deg,#E7E2D3,#B9C4D0); position:relative; }
+  .ic-mail      { background:linear-gradient(180deg,#5EB0FF,#1378FF); }
+  .ic-health    { background:#fff; }
+  .ic-appstore  { background:linear-gradient(180deg,#43BBFB,#0A84FF); }
+  .ic-settings  { background:linear-gradient(180deg,#A6ADB8,#5C6470); position:relative; }
+  /* Dock */
+  .ic-phone     { background:linear-gradient(180deg,#5BE07A,#34C759); }
+  .ic-safari    { background:radial-gradient(circle at 50% 50%, #fff 18%, #5EB0FF 32%, #0066CC 80%); }
+  .ic-whatsapp  { background:linear-gradient(180deg,#5EE291,#1AAD52); }
+  .ic-music     { background:linear-gradient(180deg,#FB5C7A,#F23055); }
+
+  /* Decorative calendar header */
+  .ic-calendar::before{
+    content:'MO'; position:absolute; top:6px; left:0; right:0;
+    font-family:'Inter',sans-serif; font-size:5.5px; letter-spacing:0.12em;
+    color:#FF3B30; text-align:center; font-weight:700;
+  }
+  .ic-calendar > .cal-day{
+    font-family:'Inter',sans-serif; font-weight:300; font-size:24px;
+    color:#1c1c1e; letter-spacing:-0.04em; line-height:1;
+  }
+  /* Maps stylised street */
+  .ic-maps::before{
+    content:''; position:absolute; inset:0;
+    background:
+      linear-gradient(120deg, transparent 35%, #fff 35%, #fff 42%, transparent 42%),
+      linear-gradient(50deg, transparent 55%, #79C674 55%, #79C674 78%, transparent 78%);
+  }
+
+  .iphone-home-dock{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:6px;
+    padding:8px 10px;
+    background:rgba(255,255,255,.18);
+    -webkit-backdrop-filter:blur(22px) saturate(140%);
+    backdrop-filter:blur(22px) saturate(140%);
+    border-radius:25px;
+    margin:0 8px 4px;
+    border:1px solid rgba(255,255,255,.06);
+  }
+  .iphone-home-dock .htile-label{ display:none; }
+  .iphone-home-dock .htile-icon{ width:84%; }
+  .iphone-home-indicator{
+    width:108px; height:4px;
+    border-radius:2px;
+    background:rgba(255,255,255,.7);
+    margin:8px auto 0;
+  }
+
+  .iphone-chat{
+    display:flex; flex-direction:column;
+    background:var(--wa-bg);
+    opacity:0;
+    z-index:1;
+  }
+  .iphone-chat.is-visible{ opacity:1; z-index:3; }
+
+  /* Side hint with arrow pointing at the push */
+  .s4-phone-row{
+    position:relative;
+    display:flex; align-items:flex-start;
+    gap:18px;
+  }
+  .s4-tap-hint{
+    position:absolute;
+    left:calc(100% + 14px);
+    top:54px;
+    display:flex; align-items:flex-start; gap:6px;
+    color:var(--ink-muted);
+    opacity:0;
+    transform:translateX(-8px);
+    transition: opacity .6s cubic-bezier(.16,1,.3,1),
+                transform .8s cubic-bezier(.16,1,.3,1);
+    pointer-events:none;
+    white-space:nowrap;
+  }
+  .s4-tap-hint.is-visible{ opacity:1; transform:translateX(0); }
+  .s4-tap-hint-arrow{
+    width:70px; height:55px;
+    flex-shrink:0;
+    margin-top:-6px;
+    color:var(--ink-muted);
+  }
+  .s4-tap-hint-text{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+    line-height:1.5;
+    margin-top:18px;
+  }
+
+  /* Report frame initial state — completely hidden,
+     materialises out of the phone via JS */
+  .report-frame .report-iframe{
+    transition: filter 1.0s cubic-bezier(.16,1,.3,1),
+                opacity 1.0s cubic-bezier(.16,1,.3,1);
+  }
+  .report-load-bar{
+    position:absolute; top:0; left:0; height:2px;
+    background:linear-gradient(90deg, transparent 0%, #0A0A0A 50%, transparent 100%);
+    width:0; z-index:25;
+    opacity:0;
+    pointer-events:none;
+  }
+  .report-frame.loading .report-load-bar{
+    animation: loadBar 1.25s cubic-bezier(.4,0,.2,1) forwards;
+  }
+  @keyframes loadBar{
+    0%{   width:0;    opacity:1; }
+    80%{  width:100%; opacity:1; }
+    100%{ width:100%; opacity:0; }
   }
 
   /* Benefits inline */
@@ -1103,15 +1563,46 @@
   }
   .rf-open:hover{ background:#0A0A0A; color:#fff; border-color:#0A0A0A; }
   .report-iframe{
-    width:100%; height:460px;
+    width:100%; height:440px;
     border:0; display:block;
     background:#f1e7d0;
   }
   .report-frame-fade{
     position:absolute; left:0; right:0; bottom:0;
-    height:80px;
-    background:linear-gradient(180deg, rgba(241,231,208,0) 0%, rgba(241,231,208,.92) 100%);
+    height:70px;
+    background:linear-gradient(180deg, rgba(241,231,208,0) 0%, rgba(241,231,208,.96) 70%, rgba(241,231,208,1) 100%);
     pointer-events:none;
+  }
+  /* Live status pill at the bottom of the report frame */
+  .report-status{
+    position:absolute;
+    bottom:14px; right:14px;
+    display:inline-flex; align-items:center; gap:7px;
+    background:rgba(255,255,255,.92);
+    -webkit-backdrop-filter:blur(8px) saturate(140%);
+    backdrop-filter:blur(8px) saturate(140%);
+    border:1px solid rgba(0,0,0,.06);
+    border-radius:9999px;
+    padding:6px 12px 6px 11px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:#5e5648;
+    z-index:20;
+    box-shadow:0 6px 18px -8px rgba(0,0,0,.18);
+    opacity:0;
+    transition: opacity .8s cubic-bezier(.16,1,.3,1);
+  }
+  .report-status.is-visible{ opacity:1; }
+  .report-status-dot{
+    width:6px; height:6px; border-radius:9999px;
+    background:#2f7d3f;
+    box-shadow:0 0 0 0 rgba(47,125,63,.5);
+    animation: dotPulse 2.4s infinite ease-out;
+  }
+  @keyframes dotPulse{
+    0%   { box-shadow: 0 0 0 0 rgba(47,125,63,.55); }
+    70%  { box-shadow: 0 0 0 8px rgba(47,125,63,0);  }
+    100% { box-shadow: 0 0 0 0 rgba(47,125,63,0);    }
   }
 
   /* utility */
@@ -1372,9 +1863,8 @@
       <p class="label-eyebrow reveal mb-8" id="s3-eye">Operator-Geschichte</p>
       <h2 class="font-display leading-[1.04] reveal" id="s3-h2"
           style="font-size:clamp(2rem,4.2vw,3.8rem); max-width:18ch;">
-        Wir haben das Problem
-        <span class="block" style="color:var(--ink-muted)">nicht beobachtet.</span>
-        <span class="block">Wir haben es gekauft.</span>
+        Wir kennen das Problem
+        <span class="block" style="color:var(--ink-muted)">aus erster Hand.</span>
       </h2>
 
       <p class="lede mt-8 reveal" id="s3-lede">
@@ -1481,57 +1971,147 @@
 
     <!-- One pithy headline with breathing room -->
     <div class="text-center" style="max-width:64ch; margin:0 auto;">
-      <p class="label-eyebrow" id="s4-eye" style="opacity:0">Der Finanzchef auf Abruf</p>
+      <p class="label-eyebrow" id="s4-eye" style="opacity:0">Der proaktive Finanzchef</p>
       <h2 class="font-display mt-4" id="s4-h2"
           style="opacity:0; font-size:clamp(2rem,3.6vw,3.2rem); line-height:1.08; letter-spacing:-0.035em;">
-        Stell die Frage. <span style="color:var(--ink-muted)">Bekomm den Report.</span>
+        Julie meldet sich. <span style="color:var(--ink-muted)">Du fragst nach.</span>
       </h2>
+      <p class="lede mt-4" id="s4-sub" style="opacity:0; margin-left:auto; margin-right:auto; max-width:54ch;">
+        Julie arbeitet, bevor du fragst. Morgens liegt der Report vor —
+        und sie meldet sich, wenn etwas auffällt.
+      </p>
     </div>
 
     <!-- Minimalist demo: iPhone (chat) + Browser (report) -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start" id="s4-demo" style="max-width:1180px; margin:0 auto; width:100%;">
 
-      <!-- LEFT — iPhone chat (interaction) -->
+      <!-- LEFT — iPhone (interaction) -->
       <div class="lg:col-span-5 flex flex-col items-center" id="s4-phone-wrap" style="opacity:0;">
-        <p class="label-eyebrow" style="margin-bottom:14px;">01 &nbsp;—&nbsp; Chat</p>
-        <div class="s4-phone-cage">
-          <div class="iphone" id="s4-phone">
-            <div class="iphone-island"></div>
-            <div class="iphone-screen">
-              <div class="iphone-status">
-                <span>9:41</span>
-                <span class="iphone-status-right">
-                  <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx=".5" fill="#111"/><rect x="4" y="4" width="3" height="6" rx=".5" fill="#111"/><rect x="8" y="2" width="3" height="8" rx=".5" fill="#111"/><rect x="12" y="0" width="3" height="10" rx=".5" fill="#111"/></svg>
-                  <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" fill="none" stroke="#111" stroke-width="1"/><rect x="2" y="3" width="14" height="4" rx="1" fill="#111"/></svg>
-                </span>
-              </div>
-              <div class="wa-header">
-                <span class="wa-back">‹</span>
-                <div class="wa-avatar"></div>
-                <div class="wa-meta">
-                  <span class="wa-name">Julie</span>
-                  <span class="wa-status"><span class="online">●</span> online</span>
+        <p class="label-eyebrow" id="s4-eye-1" style="margin-bottom:14px; opacity:0;">01 &nbsp;—&nbsp; Julie meldet sich</p>
+        <div class="s4-phone-row">
+          <div class="s4-phone-cage">
+            <div class="iphone" id="s4-phone">
+              <div class="iphone-island"></div>
+              <div class="iphone-screen is-locked" id="s4-screen">
+                <!-- iOS push notifications (animate in proactively) -->
+                <div class="ios-push" id="s4-push">
+                  <div class="ios-push-icon">J</div>
+                  <div class="ios-push-body">
+                    <div class="ios-push-meta">
+                      <span class="ios-push-meta-name">Julie.ai · WhatsApp</span>
+                      <span class="ios-push-meta-time">jetzt</span>
+                    </div>
+                    <div class="ios-push-title">Dein Januar-Report ist fertig</div>
+                    <div class="ios-push-text">Umsatz 391 K €, EBITDA 45 K €. Marge Segment A schwach — Aufschlüsselung verfügbar.</div>
+                  </div>
+                </div>
+                <div class="ios-push is-alert" id="s4-push-2">
+                  <div class="ios-push-icon">!</div>
+                  <div class="ios-push-body">
+                    <div class="ios-push-meta">
+                      <span class="ios-push-meta-name">Julie.ai · Anomalie</span>
+                      <span class="ios-push-meta-time">jetzt</span>
+                    </div>
+                    <div class="ios-push-title">Ungewöhnliche Buchung erkannt</div>
+                    <div class="ios-push-text">Sparkasse: 28 K € außerplanmäßiger Abfluss. Bestätigung empfohlen.</div>
+                  </div>
+                </div>
+
+                <!-- Status bar (white text when locked) -->
+                <div class="iphone-status">
+                  <span>9:41</span>
+                  <span class="iphone-status-right">
+                    <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="6" width="3" height="4" rx=".5" fill="#111"/><rect x="4" y="4" width="3" height="6" rx=".5" fill="#111"/><rect x="8" y="2" width="3" height="8" rx=".5" fill="#111"/><rect x="12" y="0" width="3" height="10" rx=".5" fill="#111"/></svg>
+                    <svg width="22" height="10" viewBox="0 0 22 10"><rect x="0" y="1" width="18" height="8" rx="2" fill="none" stroke="#111" stroke-width="1"/><rect x="2" y="3" width="14" height="4" rx="1" fill="#111"/></svg>
+                  </span>
+                </div>
+
+                <!-- Content area: home screen + chat view stacked -->
+                <div class="iphone-content" id="s4-content">
+
+                  <!-- Home screen (visible initially) -->
+                  <div class="iphone-home" id="s4-home">
+                    <div class="iphone-home-grid">
+                      <!-- Row 1 -->
+                      <div class="htile"><div class="htile-icon ic-facetime"><svg viewBox="0 0 24 24" fill="#fff"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11z"/></svg></div><div class="htile-label">FaceTime</div></div>
+                      <div class="htile"><div class="htile-icon ic-calendar"><span class="cal-day">15</span></div><div class="htile-label">Kalender</div></div>
+                      <div class="htile"><div class="htile-icon ic-notes"><svg viewBox="0 0 24 24" fill="none" stroke="#8B6A1C" stroke-width="1.8" stroke-linecap="round"><line x1="5" y1="8" x2="19" y2="8"/><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="16" x2="14" y2="16"/></svg></div><div class="htile-label">Notizen</div></div>
+                      <div class="htile"><div class="htile-icon ic-reminders"><svg viewBox="0 0 24 24" fill="none" stroke="#FF3B30" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="8,12 11,15 16,9"/></svg></div><div class="htile-label">Erinnerg.</div></div>
+
+                      <!-- Row 2 -->
+                      <div class="htile"><div class="htile-icon ic-weather"><svg viewBox="0 0 24 24" fill="#fff"><circle cx="8" cy="9" r="3.5" opacity=".85"/><path d="M19 17H8a3.5 3.5 0 0 1 0-7 5 5 0 0 1 9.5 1.5A3.2 3.2 0 0 1 19 17z" opacity=".95"/></svg></div><div class="htile-label">Wetter</div></div>
+                      <div class="htile"><div class="htile-icon ic-camera"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2.5"/><circle cx="12" cy="13.5" r="3.5" fill="#fff" stroke="none" opacity=".15"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8 7l1.5-2.2h5L16 7"/></svg></div><div class="htile-label">Kamera</div></div>
+                      <div class="htile"><div class="htile-icon ic-photos"><svg viewBox="0 0 24 24"><g><circle cx="12" cy="8" r="3.2" fill="#FFD60A"/><circle cx="8.5" cy="12.5" r="3.2" fill="#FF3B30" opacity=".85"/><circle cx="15.5" cy="12.5" r="3.2" fill="#34C759" opacity=".85"/><circle cx="12" cy="16" r="3.2" fill="#0A84FF" opacity=".85"/></g></svg></div><div class="htile-label">Fotos</div></div>
+                      <div class="htile"><div class="htile-icon ic-maps"></div><div class="htile-label">Karten</div></div>
+
+                      <!-- Row 3 -->
+                      <div class="htile"><div class="htile-icon ic-mail"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="1.5"/><polyline points="3,7 12,13.5 21,7"/></svg></div><div class="htile-label">Mail</div></div>
+                      <div class="htile"><div class="htile-icon ic-health"><svg viewBox="0 0 24 24" fill="#FF3B30"><path d="M12 21s-7-4.7-9-9.2C1.6 8.4 3.6 5 7 5c1.9 0 3.5 1 4.5 2.4C12.5 6 14.1 5 16 5c3.4 0 5.4 3.4 4 6.8C19 16.3 12 21 12 21z"/></svg></div><div class="htile-label">Health</div></div>
+                      <div class="htile"><div class="htile-icon ic-appstore"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 4l-4 7h2.3l-1.8 3.1 1.6.9 3.7-6.4-1.8-3.2zm-4.3 11.5h8.6c1 0 1.5-.5 1.5-1.5l-.5-1H6.7l-.5 1c0 1 .5 1.5 1.5 1.5zm-2 2c-.6 0-1-.4-1-1V15l1 2.5zm12.6 0c.6 0 1-.4 1-1V15l-1 2.5z"/></svg></div><div class="htile-label">App Store</div></div>
+                      <div class="htile"><div class="htile-icon ic-settings"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><div class="htile-label">Einstellg.</div></div>
+                    </div>
+
+                    <div class="iphone-home-pages">
+                      <span></span><span class="active"></span><span></span>
+                    </div>
+
+                    <div class="iphone-home-dock">
+                      <div class="htile"><div class="htile-icon ic-phone"><svg viewBox="0 0 24 24" fill="#fff"><path d="M19.5 16c-1.2 0-2.4-.2-3.5-.6-.4-.1-.8 0-1 .2l-2.2 2.2c-2.8-1.5-5.2-3.9-6.7-6.7l2.2-2.2c.3-.3.4-.7.2-1C7.8 6.9 7.6 5.7 7.6 4.5 7.6 4 7.2 3.5 6.6 3.5H3.1c-.5 0-1 .4-1 1 0 9.4 7.6 17 17 17 .6 0 1-.4 1-1v-3.5c0-.5-.4-1-1-1z"/></svg></div></div>
+                      <div class="htile"><div class="htile-icon ic-safari"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#fff" stroke-width=".5"/><path d="M12 6 L13.5 11 L18 12 L13.5 13 L12 18 L10.5 13 L6 12 L10.5 11 Z" fill="#FF3B30"/><path d="M12 18 L13.5 13 L18 12 L10.5 11 Z" fill="#fff"/></svg></div></div>
+                      <div class="htile" id="s4-whatsapp-tile"><div class="htile-icon ic-whatsapp"><svg viewBox="0 0 32 32" fill="#fff"><path d="M16 3.2C8.93 3.2 3.2 8.93 3.2 16c0 2.45.7 4.74 1.9 6.69L3.2 28.8l6.31-1.86A12.74 12.74 0 0 0 16 28.8C23.07 28.8 28.8 23.07 28.8 16S23.07 3.2 16 3.2zm6.84 17.86c-.29.81-1.43 1.55-1.99 1.6-.55.05-1.04.24-3.5-.74-2.92-1.16-4.78-4.16-4.93-4.36-.14-.2-1.17-1.56-1.17-2.98s.74-2.11.99-2.4c.25-.29.56-.36.74-.36.18 0 .36.01.52.02.17.01.4-.07.62.47.22.54.74 1.86.81 1.99.07.13.12.29.02.47-.1.18-.14.29-.28.47-.14.18-.29.4-.41.54-.14.14-.29.29-.12.58.17.29.74 1.22 1.59 1.97 1.09.97 2.02 1.27 2.31 1.41.29.14.46.12.62-.07.17-.18.71-.83.9-1.12.18-.29.36-.24.62-.14.25.1 1.55.73 1.82.86.27.13.45.2.51.31.07.11.07.65-.21 1.46z"/></svg><span class="htile-badge">1</span></div></div>
+                      <div class="htile"><div class="htile-icon ic-music"><svg viewBox="0 0 24 24" fill="#fff"><path d="M9 18V5l12-2v13" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div></div>
+                    </div>
+                    <div class="iphone-home-indicator"></div>
+                  </div>
+
+                  <!-- Chat view (revealed after push tap) -->
+                  <div class="iphone-chat" id="s4-chat">
+                    <div class="wa-header">
+                      <span class="wa-back">‹</span>
+                      <div class="wa-avatar"></div>
+                      <div class="wa-meta">
+                        <span class="wa-name">Julie</span>
+                        <span class="wa-status"><span class="online">●</span> online</span>
+                      </div>
+                    </div>
+                    <div class="wa-body" id="s4-wa">
+                      <span class="wa-date">Heute</span>
+                      <!-- Chat bubbles added by JS sequentially -->
+                    </div>
+                    <div class="wa-input">
+                      <span class="wa-input-plus">+</span>
+                      <div class="wa-input-field"></div>
+                      <span class="wa-input-cam">📷</span>
+                      <span class="wa-input-mic">🎤</span>
+                    </div>
+                  </div>
+
                 </div>
               </div>
-              <div class="wa-body" id="s4-wa">
-                <span class="wa-date">Heute</span>
-                <!-- Chat bubbles added by JS sequentially -->
-              </div>
-              <div class="wa-input">
-                <span class="wa-input-plus">+</span>
-                <div class="wa-input-field"></div>
-                <span class="wa-input-cam">📷</span>
-                <span class="wa-input-mic">🎤</span>
-              </div>
             </div>
+          </div>
+
+          <!-- Side hint: handwritten-style arrow pointing at the push -->
+          <div class="s4-tap-hint" id="s4-tap-hint">
+            <svg class="s4-tap-hint-arrow" viewBox="0 0 80 60" xmlns="http://www.w3.org/2000/svg">
+              <path d="M 72 42 Q 50 42, 32 30 Q 20 22, 12 8"
+                    fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-dasharray="160"
+                    stroke-dashoffset="0"/>
+              <path d="M 12 8 L 19 11 M 12 8 L 14 16"
+                    fill="none" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="s4-tap-hint-text">Tippe die<br>Nachricht</span>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT — Live report preview (outcome) -->
+      <!-- RIGHT — Live report (materialises out of the phone) -->
       <div class="lg:col-span-7 flex flex-col" id="s4-report-wrap" style="opacity:0;">
-        <p class="label-eyebrow" style="text-align:center; margin-bottom:14px;">02 &nbsp;—&nbsp; Monatsreport</p>
-        <div class="report-frame">
+        <p class="label-eyebrow" id="s4-eye-2" style="text-align:center; margin-bottom:14px; opacity:0;">02 &nbsp;—&nbsp; Monatsreport</p>
+        <div class="report-frame" id="s4-report-frame">
+          <div class="report-load-bar"></div>
           <div class="report-frame-bar">
             <div class="rf-dots">
               <span></span><span></span><span></span>
@@ -1543,6 +2123,10 @@
             <iframe src="report_2026-01.html" class="report-iframe" id="s4-iframe" loading="lazy"
                     title="Julie.ai · Monatsbericht"></iframe>
             <div class="report-frame-fade"></div>
+            <div class="report-status" id="s4-report-status">
+              <span class="report-status-dot"></span>
+              <span>Live · zuletzt 9:41</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1759,8 +2343,13 @@ function runTypewriter(){
     const action = seq[stepIdx].action;
     if (action === 'delete') deleteStep();
     else if (action === 'finish'){
+      // Fade the caret smoothly instead of removing it — keeps the line's
+      // reserved width stable so the centred text doesn't jump sideways.
       const caret = document.getElementById('caret');
-      if (caret) caret.style.display = 'none';
+      if (caret){
+        caret.style.animation = 'none';      // stop the blink so the fade reads cleanly
+        gsap.to(caret, { opacity:0, duration:0.4, ease:EASE });
+      }
       gsap.to('#s1-b', { opacity:0, y:-10, duration:1.1, delay:0.6, ease:EASE });
       setTimeout(toPhaseC, 1900);
     }
@@ -1905,71 +2494,206 @@ function playSlide3(){
    (Merged: iPhone chat demo + live Report preview)
    ================================================== */
 function playSlide4(){
+  // Cinematic build-up:
+  //   Phase 1  Headline + centred phone on home screen
+  //   Phase 2  Push notification + side hint "Tippe die Nachricht"
+  //   Phase 3  Simulated tap → home screen fades into WhatsApp chat
+  //   Phase 4  Phone slides from centre to left grid position
+  //   Phase 5  Julie's link card flies out of the phone → report
+  //            materialises on the right (chrome → loading bar → content)
+  //   Phase 6  Realistic chat dialogue + a second proactive push (anomaly)
+
+  const phoneWrap  = document.getElementById('s4-phone-wrap');
+  const reportWrap = document.getElementById('s4-report-wrap');
+  const screen     = document.getElementById('s4-screen');
+  const home       = document.getElementById('s4-home');
+  const chat       = document.getElementById('s4-chat');
+  const push       = document.getElementById('s4-push');
+  const hint       = document.getElementById('s4-tap-hint');
+  const eye1       = document.getElementById('s4-eye-1');
+  const eye2       = document.getElementById('s4-eye-2');
+  const reportFrame= document.getElementById('s4-report-frame');
+  const whatsappIcon = document.getElementById('s4-whatsapp-tile');
+
+  // Headline fades in
   const tl = gsap.timeline({ defaults:{ ease:EASE } });
-  tl.fromTo('#s4-eye', { opacity:0, y:8 }, { opacity:1, y:0, duration:1.0 })
-    .fromTo('#s4-h2', { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3');
+  tl.fromTo('#s4-eye', { opacity:0, y:8 },  { opacity:1, y:0, duration:1.0 })
+    .fromTo('#s4-h2',  { opacity:0, y:14 }, { opacity:1, y:0, duration:1.4 }, '-=0.3')
+    .fromTo('#s4-sub', { opacity:0, y:10 }, { opacity:1, y:0, duration:1.2 }, '-=0.6');
 
-  // iPhone slides in from the left
-  gsap.fromTo('#s4-phone-wrap',
-    { opacity:0, x:-20 },
-    { opacity:1, x:0, duration:1.4, delay:1.0, ease:EASE_OUT });
+  // ---- Phase 1: phone fades in, visually centred over both columns
+  function centerOffset(){
+    if (!phoneWrap || !reportWrap) return 0;
+    const pr = phoneWrap.getBoundingClientRect();
+    const rr = reportWrap.getBoundingClientRect();
+    const phoneCentre = pr.left + pr.width/2;
+    const allCentre   = (pr.left + rr.right) / 2;
+    return allCentre - phoneCentre;
+  }
+  const shift = centerOffset();
+  // Initial state: hide report-wrap (keeps layout for accurate flight target);
+  // shift phone visually to the centre of the demo area
+  gsap.set('#s4-report-wrap', {
+    opacity:0,
+    scaleX:0.88, scaleY:0.88,
+    transformOrigin:'left center'
+  });
+  gsap.set('#s4-phone-wrap', { opacity:0, x: shift });
 
-  // Report slides in from the right (slightly later)
-  gsap.fromTo('#s4-report-wrap',
-    { opacity:0, x:20 },
-    { opacity:1, x:0, duration:1.4, delay:1.3, ease:EASE_OUT });
+  gsap.to('#s4-phone-wrap', { opacity:1, duration:1.2, delay:0.8, ease:EASE_OUT });
 
-  // Start the 3-step chat demo after both visible
-  setTimeout(() => playS4Chat(), 2400);
+  // ---- Phase 2: push arrives + side hint
+  setTimeout(() => {
+    if (push) push.classList.add('in');
+    if (whatsappIcon) whatsappIcon.classList.add('has-badge');
+  }, 2400);
+  setTimeout(() => {
+    if (hint) hint.classList.add('is-visible');
+  }, 3200);
+
+  // ---- Phase 3: simulated tap → chat opens
+  setTimeout(() => {
+    // Tap ripple on the push
+    if (push){
+      const ripple = document.createElement('div');
+      ripple.className = 'tap-indicator';
+      ripple.style.left = '50%';
+      ripple.style.top  = '50%';
+      push.appendChild(ripple);
+      requestAnimationFrame(() => ripple.classList.add('tapping'));
+      setTimeout(() => ripple.remove(), 700);
+
+      // Push press feedback
+      gsap.to(push, { scale:0.96, duration:0.18, yoyo:true, repeat:1, ease:'power2.out' });
+    }
+    // Hint fades away
+    if (hint) hint.classList.remove('is-visible');
+  }, 5300);
+
+  setTimeout(() => {
+    // Push dismisses, home screen fades out, chat fades in
+    if (push){ push.classList.remove('in'); push.classList.add('out'); }
+    if (home) home.classList.add('is-hidden');
+    if (chat) chat.classList.add('is-visible');
+    if (screen) screen.classList.remove('is-locked');
+    if (whatsappIcon) whatsappIcon.classList.remove('has-badge');
+    if (eye1) gsap.to(eye1, { opacity:1, duration:0.8, ease:EASE_OUT });
+  }, 5800);
+
+  // ---- Phase 4: phone slides from centre to its left grid position
+  setTimeout(() => {
+    gsap.to('#s4-phone-wrap', { x:0, duration:1.2, ease:'expo.out' });
+  }, 6600);
+
+  // ---- Phase 5: chat begins while the phone is still settling —
+  //   Julie's first greeting types in during the slide, then the link
+  //   card flies out and materialises the report on the right.
+  setTimeout(() => playS4Chat(), 6900);
 }
 
 function playS4Chat(){
   const wa = document.getElementById('s4-wa');
+  const reportFrame = document.getElementById('s4-report-frame');
   if (!wa) return;
 
-  // Chat script: 3 exchanges demonstrating Monatsreporting, Budget, Deep Dive
+  // Realistic Julie ↔ Yannick conversation, grounded in what
+  // Julie actually does: Monatsreporting, Kunden-/Lieferantenanalyse,
+  // Cashflow, Anomalie-Erkennung, Deep Dives (Mahnwesen).
+  // Julie analysiert, empfiehlt und bereitet vor — sie versendet nichts.
   const sequence = [
     {
-      kind:'me',
-      text:'Wie war März?',
-      time:'10:23',
+      kind:'them',
+      html:'<strong style="font-weight:600">Guten Morgen, Yannick.</strong> Dein Januar-Bericht ist fertig — inklusive Handlungsempfehlungen.',
+      time:'07:02',
       delay:200,
     },
-    { kind:'thinking', delay:900 },
+    // The link card IS the report being handed over
+    {
+      kind:'card',
+      delay:2200,
+      title:'Management-Bericht · Januar 2026',
+      sub:'report.julie.ai · GuV · CashFlow · OPOS',
+      time:'07:02',
+      tapAt:2100,
+      autoLaunch:true,
+      reportFrame,
+    },
+
+    // User reads, then asks the operationally relevant question
+    { kind:'me', text:'Schon mal überflogen. Sieht solide aus.', time:'07:14', delay:8400 },
+    { kind:'me', text:'Was zieht die Rohertragsquote so runter?', time:'07:14', delay:9700 },
+    { kind:'thinking', delay:10500 },
     {
       kind:'them',
-      html:'März lief solide. <strong style="font-weight:600">Umsatz 391&nbsp;K&nbsp;€</strong>, EBITDA <strong style="font-weight:600">45&nbsp;K&nbsp;€</strong>. Marge Segment&nbsp;A schwach — soll ich&nbsp;aufschlüsseln?',
-      time:'10:24',
-      delay:1900,
-      feat:1,
+      html:'Hauptsächlich Wareneinsatz. <strong style="font-weight:600">Lieferant&nbsp;X</strong> hat 22 % unseres Volumens — bei <strong style="font-weight:600">18 % höheren Stückkosten</strong> als Lieferant&nbsp;Y.',
+      time:'07:15',
+      delay:11900,
     },
     {
-      kind:'me',
-      text:'Reicht der Cashflow für 2 Einstellungen?',
-      time:'10:26',
-      delay:3200,
+      kind:'them-action',
+      html:'Empfehlung: Volumen schrittweise zu&nbsp;Y verschieben. Geschätzter Hebel <strong style="font-weight:600">~8&nbsp;K&nbsp;€ / Monat</strong>. Soll ich einen Deep&nbsp;Dive Lieferantenanalyse anhängen?',
+      time:'07:15',
+      delay:13700,
+      pressAt:1700,
+      actions:[
+        { label:'Ja, gerne', primary:true, press:true },
+        { label:'Später' }
+      ],
     },
-    { kind:'thinking', delay:3800 },
-    {
-      kind:'them',
-      html:'Bei aktueller Run-Rate: ja. Cashflow trägt <strong style="font-weight:600">4,2 Monate</strong> Mehrkosten. Tipp: erst Lieferant&nbsp;X verhandeln, dann starten.',
-      time:'10:26',
-      delay:4800,
-      feat:2,
-    },
-    {
-      kind:'me',
-      text:'Welche OPOS sind überfällig?',
-      time:'10:28',
-      delay:6100,
-    },
-    { kind:'thinking', delay:6700 },
+    { kind:'me', text:'Und wie steht der Cashflow?', time:'07:16', delay:16500 },
+    { kind:'thinking', delay:16900 },
     {
       kind:'them',
-      html:'<strong style="font-weight:600">6 Positionen, gesamt 87&nbsp;K&nbsp;€.</strong> Top-Risiko: Kunde&nbsp;Y (<strong style="font-weight:600">42&nbsp;K&nbsp;€</strong>, 48 Tage). Mahnschreiben aufsetzen?',
-      time:'10:28',
-      delay:7600,
-      feat:3,
+      html:'Operativer Cashflow Januar: <strong style="font-weight:600">+38&nbsp;K&nbsp;€</strong>. Working Capital um 12&nbsp;K&nbsp;€ verbessert — Forderungen kommen schneller rein.',
+      time:'07:17',
+      delay:18100,
+    },
+    {
+      kind:'them',
+      html:'Liquiditätsreichweite aktuell <strong style="font-weight:600">4,2 Monate</strong>.',
+      time:'07:17',
+      delay:19800,
+    },
+
+    // Second proactive push later in the day: anomaly detected
+    {
+      kind:'push',
+      delay:22000,
+      pushId:'s4-push-2',
+      duration:2800,
+    },
+    {
+      kind:'alert',
+      delay:25100,
+      tagText:'Anomalie · 11:07',
+      html:'Ungewöhnlicher Mittelabfluss <strong style="font-weight:600">28&nbsp;K&nbsp;€</strong> vom Sparkassen-Konto — außerhalb des typischen Buchungsmusters. War das geplant?',
+      time:'11:07',
+    },
+    { kind:'me', text:'Ja, war Vorauszahlung an Lieferant X.', time:'11:08', delay:27300 },
+    { kind:'thinking', delay:28000 },
+    {
+      kind:'them',
+      html:'Notiert als <em>Vorauszahlung Wareneinkauf</em>. Liquiditätsreichweite jetzt <strong style="font-weight:600">3,8 Monate</strong>.',
+      time:'11:09',
+      delay:29300,
+    },
+    {
+      kind:'them-action',
+      html:'Übrigens: in den OPOS steht <strong style="font-weight:600">Kunde&nbsp;Y</strong> mit 42&nbsp;K&nbsp;€, jetzt 48&nbsp;Tage überfällig. Deep&nbsp;Dive Mahnwesen aufsetzen?',
+      time:'11:09',
+      delay:31100,
+      pressAt:1700,
+      actions:[
+        { label:'Ja, bitte', primary:true, press:true },
+        { label:'Später' }
+      ],
+    },
+    { kind:'thinking', delay:33500 },
+    {
+      kind:'them',
+      html:'Deep&nbsp;Dive steht — Empfehlung: <strong style="font-weight:600">Mahnstufe&nbsp;2 mit Telefonkontakt</strong>. Anschreiben liegt als Vorlage im Entwurf.',
+      time:'11:11',
+      delay:34800,
     },
   ];
 
@@ -1978,7 +2702,6 @@ function playS4Chat(){
   sequence.forEach((step) => {
     setTimeout(() => {
       if (step.kind === 'thinking'){
-        // Add a typing-indicator bubble
         const t = document.createElement('div');
         t.className = 'bubble b-them thinking';
         t.style.width = 'fit-content';
@@ -1993,14 +2716,103 @@ function playS4Chat(){
         wa.appendChild(b);
         requestAnimationFrame(() => b.classList.add('in'));
       } else if (step.kind === 'them'){
-        // Remove previous thinking indicator
-        if (currentThinkingEl){
-          currentThinkingEl.remove();
-          currentThinkingEl = null;
-        }
+        if (currentThinkingEl){ currentThinkingEl.remove(); currentThinkingEl = null; }
         const b = document.createElement('div');
         b.className = 'bubble b-them';
         b.innerHTML = `${step.html} <span class="time">${step.time}</span>`;
+        wa.appendChild(b);
+        requestAnimationFrame(() => b.classList.add('in'));
+      } else if (step.kind === 'card'){
+        // Rich link-preview card sent by Julie with KPI teaser
+        const card = document.createElement('div');
+        card.className = 'bubble b-them b-card';
+        card.innerHTML = `
+          <div class="b-card-preview">
+            <div class="b-card-preview-eyebrow">
+              <span><span class="dot"></span>Januar 2026</span>
+              <span>Vorperiode</span>
+            </div>
+            <div class="b-card-kpis">
+              <div class="b-card-kpi">
+                <span class="b-card-kpi-label">Umsatz</span>
+                <span class="b-card-kpi-value">391&nbsp;K€</span>
+                <span class="b-card-kpi-trend up">↑ 4 %</span>
+              </div>
+              <div class="b-card-kpi">
+                <span class="b-card-kpi-label">EBITDA</span>
+                <span class="b-card-kpi-value">45&nbsp;K€</span>
+                <span class="b-card-kpi-trend up">↑ 8 %</span>
+              </div>
+              <div class="b-card-kpi">
+                <span class="b-card-kpi-label">Marge</span>
+                <span class="b-card-kpi-value">11,5 %</span>
+                <span class="b-card-kpi-trend down">↓ 2 pp</span>
+              </div>
+            </div>
+          </div>
+          <div class="b-card-meta">
+            <div class="b-card-title">${step.title}</div>
+            <div class="b-card-sub">${step.sub}</div>
+          </div>
+          <span class="b-card-time">${step.time}</span>
+        `;
+        wa.appendChild(card);
+        requestAnimationFrame(() => {
+          card.classList.add('in');
+          // Subtle pulse before auto-launch
+          setTimeout(() => card.classList.add('pulsing'), 600);
+        });
+        // Auto-launch the card → report materialises on the right
+        setTimeout(
+          () => launchCardToReport(card, step.reportFrame, !!step.autoLaunch),
+          step.tapAt || 2100
+        );
+      } else if (step.kind === 'push'){
+        const p = document.getElementById(step.pushId);
+        if (p){
+          p.classList.remove('out');
+          p.classList.add('in');
+          setTimeout(() => {
+            p.classList.remove('in');
+            p.classList.add('out');
+          }, step.duration || 2400);
+        }
+      } else if (step.kind === 'them-action'){
+        // Julie message with inline action buttons (Ja / Später / ...)
+        if (currentThinkingEl){ currentThinkingEl.remove(); currentThinkingEl = null; }
+        const b = document.createElement('div');
+        b.className = 'bubble b-them';
+        const actionsHtml = (step.actions || []).map((a, i) => {
+          return `<button class="b-action-btn${a.primary ? ' primary' : ''}" data-idx="${i}">${a.label}</button>`;
+        }).join('');
+        b.innerHTML = `
+          ${step.html}
+          <div class="b-actions">${actionsHtml}</div>
+          <span class="time">${step.time}</span>
+        `;
+        wa.appendChild(b);
+        requestAnimationFrame(() => b.classList.add('in'));
+        // Simulate user pressing the primary button after a beat
+        const pressIdx = (step.actions || []).findIndex(a => a.press);
+        if (pressIdx >= 0){
+          setTimeout(() => {
+            const btns = b.querySelectorAll('.b-action-btn');
+            const target = btns[pressIdx];
+            if (target){
+              btns.forEach((el, j) => { if (j !== pressIdx) el.classList.add('dimmed'); });
+              target.classList.add('pressed');
+            }
+          }, step.pressAt || 1600);
+        }
+      } else if (step.kind === 'alert'){
+        if (currentThinkingEl){ currentThinkingEl.remove(); currentThinkingEl = null; }
+        const b = document.createElement('div');
+        b.className = 'bubble b-them b-alert';
+        b.innerHTML = `
+          <div class="alert-tag"><span class="alert-dot"></span>${step.tagText}</div>
+          ${step.html}
+          <span class="time">${step.time}</span>
+        `;
         wa.appendChild(b);
         requestAnimationFrame(() => b.classList.add('in'));
       }
@@ -2010,6 +2822,103 @@ function playS4Chat(){
       });
     }, step.delay);
   });
+}
+
+/* ==================================================
+   Slide 4 helpers — the link card auto-launches out
+   of the phone, flies through the air, and the report
+   materialises on the right where it lands.
+   ================================================== */
+function launchCardToReport(cardEl, reportFrame, autoLaunch){
+  if (!cardEl) return;
+
+  // Optional tap ripple (only when triggered by a "tap")
+  if (!autoLaunch){
+    const ripple = document.createElement('div');
+    ripple.className = 'tap-indicator';
+    ripple.style.left = '50%';
+    ripple.style.top  = '50%';
+    cardEl.appendChild(ripple);
+    requestAnimationFrame(() => ripple.classList.add('tapping'));
+    setTimeout(() => ripple.remove(), 720);
+  }
+
+  // Card press feedback
+  cardEl.classList.remove('pulsing');
+  cardEl.classList.add('tapped');
+  setTimeout(() => cardEl.classList.remove('tapped'), 260);
+
+  // Fly the clone after the press feedback
+  setTimeout(() => flyCardToReport(cardEl, reportFrame), autoLaunch ? 180 : 240);
+}
+
+function flyCardToReport(cardEl, reportFrame){
+  if (!cardEl || !reportFrame) return;
+
+  const reportWrap = document.getElementById('s4-report-wrap');
+  const eye2       = document.getElementById('s4-eye-2');
+  const cardRect   = cardEl.getBoundingClientRect();
+  const reportRect = reportWrap.getBoundingClientRect();
+
+  // Build the flying clone — visually the report leaving the phone
+  const flier = cardEl.cloneNode(true);
+  flier.style.position = 'fixed';
+  flier.style.left   = cardRect.left + 'px';
+  flier.style.top    = cardRect.top  + 'px';
+  flier.style.width  = cardRect.width + 'px';
+  flier.style.height = cardRect.height + 'px';
+  flier.style.margin = '0';
+  flier.style.zIndex = '200';
+  flier.style.pointerEvents = 'none';
+  flier.style.transformOrigin = 'center center';
+  flier.style.boxShadow = '0 36px 70px rgba(0,0,0,.28), 0 14px 28px rgba(0,0,0,.18)';
+  flier.classList.remove('pulsing','tapped');
+  const t = flier.querySelector('.b-card-time'); if (t) t.remove();
+  flier.querySelectorAll('.tap-indicator').forEach(el => el.remove());
+  document.body.appendChild(flier);
+
+  // Trajectory: card centre → report-wrap centre
+  const startX  = cardRect.left   + cardRect.width/2;
+  const startY  = cardRect.top    + cardRect.height/2;
+  const targetX = reportRect.left + reportRect.width/2;
+  const targetY = reportRect.top  + reportRect.height/2;
+  const dx = targetX - startX;
+  const dy = targetY - startY;
+
+  // Grow to ~half the report-wrap width as it flies
+  const targetScale = Math.max(1.6, (reportRect.width * 0.55) / cardRect.width);
+
+  // Arc trajectory: up-and-over, settle, then dissolve
+  gsap.to(flier, {
+    keyframes: [
+      { x: dx*0.45, y: dy*0.40 - 80, scale: 1.18, rotation: -2,
+        duration: 0.60, ease:'power2.out' },
+      { x: dx,       y: dy,           scale: targetScale, rotation: 0,
+        duration: 0.55, ease:'power2.in' },
+      { opacity: 0, scale: targetScale * 1.08,
+        duration: 0.30, ease:'power2.out' },
+    ],
+    onComplete: () => flier.remove(),
+  });
+
+  // Mid-flight, the right-hand report materialises FROM the phone:
+  //   eyebrow fades in, the wrap unfolds (scaleX 0→1, transform-origin left),
+  //   loading bar sweeps, then live-status pill fades in.
+  setTimeout(() => {
+    if (eye2) gsap.to(eye2, { opacity:1, duration:0.6, ease:EASE_OUT });
+    if (reportWrap){
+      gsap.to(reportWrap, {
+        opacity:1, scaleX:1, scaleY:1,
+        duration:0.95, ease:'expo.out',
+      });
+    }
+    reportFrame.classList.add('loading');
+    setTimeout(() => reportFrame.classList.remove('loading'), 1300);
+    setTimeout(() => {
+      const status = document.getElementById('s4-report-status');
+      if (status) status.classList.add('is-visible');
+    }, 1500);
+  }, 850);
 }
 
 /* ==================================================
